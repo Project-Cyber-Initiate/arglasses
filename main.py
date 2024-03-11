@@ -56,8 +56,8 @@ import button
 def draw_window():
     # print(hovershift2)
     # Fill the screen with white
-    screen.blit(frame, (0, 0))
-    # screen.fill(WHITE)
+    # screen.blit(frame, (0, 0))
+    screen.fill(WHITE)
     # pygame.draw.rect(screen, color, (rectx, recty, rectw, recth))
     # pygame.draw.rect(screen, WHITE, (rectx * 4.5, recty, rectw, recth))
     # pygame.draw.rect(screen, WHITE, (rectx * 8, recty, rectw, recth))
@@ -83,6 +83,13 @@ while running:
         elif event.type == pygame.MOUSEMOTION:
             scalex, scaley, scalex1, scaley1, scalex2, scaley2, initialize1, initialize2, initialize3, hover_background1, hover_background2, hover_background3 = button.button((event.pos, rectx, recty, rectw, recth))
             click.click(event.pos[0], event.pos[1], rectx, recty, rectw, recth)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if initialize1:
+                pass
+            elif initialize2:
+                pass
+            elif initialize3:
+                pass
             
         search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (rectw*scalex, recth*scaley)))
         search_background = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (rectw*scalex*2*hover_background1, recth*scaley*1.2)))
@@ -90,6 +97,7 @@ while running:
         gayming_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (rectw*scalex1*hover_background2*2.1, recth*scaley1*1.2))
         messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (rectw*scalex2, recth*scaley2))
         messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (rectw*scalex2*hover_background3*2, recth*scaley2*1.2))
+    
         
     # print(initialize2)
     ret, frame = cap.read()
@@ -111,6 +119,14 @@ while running:
     draw_window()
     # Cap the FPS
     clock.tick(FPS)
+   
+    # buffer = pygame.image.tostring(screen, "RGBA")
+    # image = Image.frombuffer("RGBA", (WIDTH, HEIGHT), buffer)
+
+    # try:
+    #     image.save('surface.bmp')
+    # except:
+    #     pass
 
 # Quit Pygame
 pygame.quit()
