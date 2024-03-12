@@ -80,7 +80,7 @@ def draw_window():
     game.get('screen').blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
 
     for draw in draws:
-        draw[2](game.get('screen'), (0, 0, 0), draw[0])
+        draw[1](game.get('screen'), (0, 0, 0), draw[0])
     # Update the display
     pygame.display.flip()
 
