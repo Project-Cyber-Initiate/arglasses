@@ -1,14 +1,19 @@
 import pygame
 import sys
 import os 
-# import button
-# Initialize Pygame
-pygame.init()
 import cv2
 import numpy as np
 from pygame.locals import *
 from PIL import Image 
+
+# import button
+# Initialize Pygame
+pygame.init()
+
 import click
+import button
+
+from pages.search import search
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
@@ -49,76 +54,80 @@ hover_background1 = 0
 hover_background2 = 0
 hover_background3 = 0
 
+game = dict(
+    zip(
+        ['pygame', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running'], 
+        [pygame, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True]
+    )
+)
 
-import button
+draws = []
 
 # Function to draw the window
 def draw_window():
     # print(hovershift2)
     # Fill the screen with white
     # screen.blit(frame, (0, 0))
-    screen.fill(WHITE)
+    game.get('screen').fill(WHITE)
     # pygame.draw.rect(screen, color, (rectx, recty, rectw, recth))
     # pygame.draw.rect(screen, WHITE, (rectx * 4.5, recty, rectw, recth))
     # pygame.draw.rect(screen, WHITE, (rectx * 8, recty, rectw, recth))
-    screen.blit(search_background, (rectx * .3 + hovershift1[0], recty * .2 + hovershift1[1]-20))
-    screen.blit(search, (rectx * .3 + hovershift1[0], recty * .2 + hovershift1[1]))
-    screen.blit(gayming_background, (rectx * .3 + hovershift2[0], recty + hovershift2[1]-15))
-    screen.blit(gayming, (rectx * .3 + hovershift2[0], recty + hovershift2[1]))
-    screen.blit(messages_background, (rectx * .3 + hovershift3[0], recty*1.8 + hovershift3[1]-15))
-    screen.blit(messages, (rectx * .3 + hovershift3[0], recty*1.8 + hovershift3[1]))
+    game.get('screen').blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-20))
+    game.get('screen').blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
+    game.get('screen').blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0], game.get('recty') + game.get('hovershift2')[1]-15))
+    game.get('screen').blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0], game.get('recty') + game.get('hovershift2')[1]))
+    game.get('screen').blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
+    game.get('screen').blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
 
-
+    for draw in draws:
+        draw[2](game.get('screen'), (0, 0, 0), draw[0])
     # Update the display
     pygame.display.flip()
 
 # Main loop
-clock = pygame.time.Clock()
-running = True
-while running:
+while game.get('running') == True:
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            game['running'] = False
         elif event.type == pygame.MOUSEMOTION:
-            scalex, scaley, scalex1, scaley1, scalex2, scaley2, initialize1, initialize2, initialize3, hover_background1, hover_background2, hover_background3 = button.button((event.pos, rectx, recty, rectw, recth))
-            click.click(event.pos[0], event.pos[1], rectx, recty, rectw, recth)
+            game['scalex'], game['scaley'], game['scalex1'], game['scaley1'], game['scalex2'], game['scaley2'], game['initialize1'], game['initialize2'], game['initialize3'], game['hover_background1'], game['hover_background2'], game['hover_background3'] = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth')))
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if initialize1:
+            if game.get('initialize1'):
+                draws.append(search(game, event))
                 pass
-            elif initialize2:
+            elif game.get('initialize2'):
                 pass
-            elif initialize3:
+            elif game.get('initialize3'):
                 pass
             
-        search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (rectw*scalex, recth*scaley)))
-        search_background = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (rectw*scalex*2*hover_background1, recth*scaley*1.2)))
-        gayming = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (rectw*scalex1, recth*scaley1))
-        gayming_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (rectw*scalex1*hover_background2*2.1, recth*scaley1*1.2))
-        messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (rectw*scalex2, recth*scaley2))
-        messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (rectw*scalex2*hover_background3*2, recth*scaley2*1.2))
+        game['search'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex'), game.get('recth')*game.get('scaley'))))
+        game['search_background'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))
+        game['gayming'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1'), game.get('recth')*game.get('scaley1')))
+        game['gayming_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (game.get('rectw')*game.get('scalex1')*game.get('hover_background2')*2.1, game.get('recth')*game.get('scaley1')*1.2))
+        game['messages'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2'), game.get('recth')*game.get('scaley2')))
+        game['messages_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
     
         
-    # print(initialize2)
+    # print(game.get('initialize2'))
     ret, frame = cap.read()
     if ret:
         # Convert the OpenCV frame to a Pygame surface
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = np.rot90(frame)  # Rotate the frame 90 degrees
         frame = pygame.surfarray.make_surface(frame)
-        frame = pygame.transform.scale(frame, (WIDTH, HEIGHT+ 200))
+        frame = pygame.transform.scale(frame, (game.get('WIDTH'), game.get('HEIGHT')+ 200))
 
-    hovershift1 = (rectw * (1 - scalex) * .5 * initialize1, recth * (1 - scaley) * .5 * initialize1)
-    hovershift2 = (rectw * (1 - scalex1) * .5 * initialize2, recth * (1 - scaley1) * .5 * initialize2)
-    hovershift3 = (rectw * (1 - scalex2) * .5 * initialize3, recth * (1 - scaley2) * .5 * initialize3)
-   
+    game['hovershift1'] = (game.get('rectw') * (1 - game.get('scalex')) * .5 * game.get('initialize1'), game.get('recth') * (1 - game.get('scaley')) * .5 * game.get('initialize1'))
+    game['hovershift2'] = (game.get('rectw') * (1 - game.get('scalex1')) * .5 * game.get('initialize2'), game.get('recth') * (1 - game.get('scaley1')) * .5 * game.get('initialize2'))
+    game['hovershift3'] = (game.get('rectw') * (1 - game.get('scalex2')) * .5 * game.get('initialize3'), game.get('recth') * (1 - game.get('scaley2')) * .5 * game.get('initialize3'))
         
     # hovershift2 = initialize2
 
     # Draw the window
     draw_window()
     # Cap the FPS
-    clock.tick(FPS)
+    game.get('clock').tick(game.get('FPS'))
    
     # buffer = pygame.image.tostring(screen, "RGBA")
     # image = Image.frombuffer("RGBA", (WIDTH, HEIGHT), buffer)
