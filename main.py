@@ -13,7 +13,7 @@ pygame.init()
 import click
 import button
 
-from pages.search import search
+import pages.search
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
@@ -61,7 +61,7 @@ game = dict(
     )
 )
 
-draws = []
+draws = [pages.search.draw]
 
 # Function to draw the window
 def draw_window():
@@ -80,7 +80,7 @@ def draw_window():
     game.get('screen').blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
 
     for draw in draws:
-        draw[1](game.get('screen'), (0, 0, 0), draw[0])
+        draw(game)
     # Update the display
     pygame.display.flip()
 
@@ -94,7 +94,7 @@ while game.get('running') == True:
             game['scalex'], game['scaley'], game['scalex1'], game['scaley1'], game['scalex2'], game['scaley2'], game['initialize1'], game['initialize2'], game['initialize3'], game['hover_background1'], game['hover_background2'], game['hover_background3'] = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth')))
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if game.get('initialize1'):
-                draws.append(search(game, event))
+                pages.search.search(game, event)
                 pass
             elif game.get('initialize2'):
                 pass
