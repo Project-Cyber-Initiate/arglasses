@@ -104,22 +104,17 @@ if (__name__ == "__main__"):
                 game['scalex'], game['scaley'], game['scalex1'], game['scaley1'], game['scalex2'], game['scaley2'], game['initialize1'], game['initialize2'], game['initialize3'], game['hover_background1'], game['hover_background2'], game['hover_background3'] = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth')))
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game.get('initialize1'):
-                    buttonsnum = 1
-                    pages.gayming_button.search(game, event, buttonsnum)
-                    pages.search.search(game, event, buttonsnum)
-                    # pages.messages_button.search(game, event, buttonsnum)
+                    pages.search.show(game, event, buttonsnum)
+                    pages.gayming_button.hide()
+                    pages.messages_button.hide()
                 elif game.get('initialize2'):
-                    buttonsnum = 2
-                    pages.search.search(game, event, buttonsnum)
-                    # pages.messages_button.search(game, event, buttonsnum)
-                    buttonsnum = 2
-                    pages.gayming_button.search(game, event, buttonsnum)
-
+                    pages.gayming_button.show(game, event, buttonsnum)
+                    pages.search.hide()
+                    pages.messages_button.hide()
                 elif game.get('initialize3'):
-                    buttonsnum = 3
-                    # pages.messages_button.search(game, event, buttonsnum)
-                    # pages.search.search(game, event, buttonsnum)
-                    # pages.gayming_button.search(game, event, buttonsnum)
+                    pages.messages_button.show(game, event, buttonsnum)
+                    pages.search.hide()
+                    pages.gayming_button.hide()
 
             game['search'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex'), game.get('recth')*game.get('scaley'))))
             game['search_background'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))

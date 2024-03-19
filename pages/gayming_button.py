@@ -23,31 +23,32 @@ basketrandom = pygame.transform.scale(pygame.image.load(os.path.join('png', 'bas
 flappybird = pygame.transform.scale(pygame.image.load(os.path.join('png', 'flappybird_logo.png')), (200,200))
 
 
-def search(game, event, buttonsnum):
+def show(game, event, buttonsnum):
     global clicks, draw_params
-    screen = pygame.display.set_mode((WIDTH, HEIGHT)) 
     clicks += 1
     box = pygame.Rect(0, 0, 200, 32)
     text = str(clicks)
     font = pygame.font.Font(None, 32)
     text = font.render(text, True, (255, 255, 255))
-    draw_params = []
     # draw_params.append((pygame.draw.rect, (game.get('screen'), (0, 0, 0), box)))
     # draw_params.append((game.get('screen').blit, (text, (10, 10))))
     try:
-        number = clicks
-        if is_even(number):
+        if len(draw_params) > 0:
+            draw_params = []
             pass
         else:
-            if buttonsnum == 2:
-                draw_params.append((screen.blit, (basketrandom, (450, 250))))
-                draw_params.append((screen.blit, (flappybird, (800, 250))))
-            else:
-                pass
+            draw_params.append((game.get("screen").blit, (basketrandom, (450, 250))))
+            draw_params.append((game.get("screen").blit, (flappybird, (800, 250))))
 
 
-    except:
+    except Exception as e:
+        print("Error:", e)
         pass
+
+def hide():
+    global draw_params
+    draw_params = []
+    pass
 
 def draw(game):
     if len(draw_params) > 0:
