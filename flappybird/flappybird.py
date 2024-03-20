@@ -330,16 +330,41 @@ def main():
 
     frame_clock = 0  # this counter is only incremented if the game isn't paused
     score = 0
-    done = paused = False
+    done = False
+    paused = False
     def runGame():
         nonlocal display_surface, clock, score_font, images, bird, pipes, frame_clock, score, done, paused
-        if done:
-            return print("Game Over")
-        # Handle this 'manually'.  If we used pygame.time.set_timer(),
-        # pipe addition would be messed up when paused.
         if not (paused or frame_clock % msec_to_frames(PipePair.ADD_INTERVAL)):
             pp = PipePair(images['pipe-end'], images['pipe-body'])
             pipes.append(pp)
+            
+        if done == True:
+            # Handle this 'manually'.  If we used pygame.time.set_timer(),
+            # pipe addition would be messed up when paused.
+
+            for x in (0, WIN_WIDTH / 2):
+                display_surface.blit(images['background'], (x, 0))
+
+            while pipes and not pipes[0].visible:
+                pipes.popleft()
+
+            for p in pipes:
+                display_surface.blit(p.image, p.rect)
+
+            display_surface.blit(bird.image, bird.rect)
+
+            # update and display score
+            for p in pipes:
+                if p.x + PipePair.WIDTH < bird.x and not p.score_counted:
+                    score += 1
+                    p.score_counted = True
+
+            score_surface = score_font.render(str("Game Over"), True, (255, 255, 255))
+            score_x = WIN_WIDTH/2 - score_surface.get_width()/2
+            display_surface.blit(score_surface, (score_x, PipePair.PIECE_HEIGHT))
+
+            frame_clock += 1
+            return None
 
         for e in pygame.event.get():
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
