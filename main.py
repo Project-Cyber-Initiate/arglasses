@@ -78,9 +78,6 @@ if (__name__ == "__main__"):
         # Fill the screen with white
         # screen.blit(frame, (0, 0))
         game.get('screen').fill(WHITE)
-        # pygame.draw.rect(screen, color, (rectx, recty, rectw, recth))
-        # pygame.draw.rect(screen, WHITE, (rectx * 4.5, recty, rectw, recth))
-        # pygame.draw.rect(screen, WHITE, (rectx * 8, recty, rectw, recth))
         game.get('screen').blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-20))
         game.get('screen').blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
         game.get('screen').blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0]+10, game.get('recty') + game.get('hovershift2')[1]-10))

@@ -16,6 +16,8 @@ def is_even(number):
     return number % 2 == 0
 
 messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'nomessages.png')), (900,500))
+background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')), (1200,600))
+
 
 def show(game, event, buttonsnum):
     global clicks, draw_params
@@ -25,6 +27,7 @@ def show(game, event, buttonsnum):
             draw_params = []
             pass
         else:
+            draw_params.append((game.get("screen").blit, (background, (50, 75))))
             draw_params.append((game.get("screen").blit, (messages, (200, 100))))
     except Exception as e:
         print("Drawing Error:", e)

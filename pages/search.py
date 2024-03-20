@@ -15,7 +15,9 @@ clicks = 0
 def is_even(number):
     return number % 2 == 0
 
-search_surface = pygame.transform.scale(pygame.image.load(os.path.join('png', 'google search.webp')), (900,500))
+search_surface = pygame.transform.scale(pygame.image.load(os.path.join('png', 'google search.webp')), (400,250))
+background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')), (800,250))
+
 
 def show(game, event, buttonsnum):
     global clicks, draw_params
@@ -25,7 +27,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             pass
         else:
-            draw_params.append((game.get("screen").blit, (search_surface, (200, 100))))
+            draw_params.append((game.get("screen").blit, (background, (250, 230))))
+            draw_params.append((game.get("screen").blit, (search_surface, (450, 230))))
     except Exception as e:
         print("Error:", e)
         pass
