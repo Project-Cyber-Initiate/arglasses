@@ -87,9 +87,9 @@ class Bird(pygame.sprite.Sprite):
             last called.
         """
         if self.msec_to_climb > 0:
-            frac_climb_done = 1 - self.msec_to_climb/Bird.CLIMB_DURATION
+            frac_climb_done = 1 - self.msec_to_climb / Bird.CLIMB_DURATION
             self.y -= (Bird.CLIMB_SPEED * frames_to_msec(delta_frames) *
-                       (1 - math.cos(frac_climb_done * math.pi)))
+                       (math.cos(frac_climb_done * math.pi)))
             self.msec_to_climb -= frames_to_msec(delta_frames)
         else:
             self.y += Bird.SINK_SPEED * frames_to_msec(delta_frames)
@@ -315,7 +315,9 @@ def main():
     example), this function is called.
     """
 
-    display_surface = game.get('screen')
+    # create new pygame surface without making a window
+
+    display_surface = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
 
     clock = game.get('clock')
     score_font = pygame.font.SysFont(None, 32, bold=True)  # default font
@@ -337,7 +339,7 @@ def main():
         if not (paused or frame_clock % msec_to_frames(PipePair.ADD_INTERVAL)):
             pp = PipePair(images['pipe-end'], images['pipe-body'])
             pipes.append(pp)
-            
+
         if done == True:
             # Handle this 'manually'.  If we used pygame.time.set_timer(),
             # pipe addition would be messed up when paused.
@@ -364,7 +366,7 @@ def main():
             display_surface.blit(score_surface, (score_x, PipePair.PIECE_HEIGHT))
 
             frame_clock += 1
-            return None
+            return display_surface
 
         for e in pygame.event.get():
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
@@ -377,7 +379,7 @@ def main():
                 bird.msec_to_climb = Bird.CLIMB_DURATION
 
         if paused:
-            return  # don't draw anything
+            return display_surface
 
         # check for collisions
         pipe_collision = any(p.collides_with(bird) for p in pipes)
@@ -408,6 +410,8 @@ def main():
         display_surface.blit(score_surface, (score_x, PipePair.PIECE_HEIGHT))
 
         frame_clock += 1
+
+        return display_surface
 
     return runGame
 

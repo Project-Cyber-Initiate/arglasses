@@ -69,6 +69,10 @@ game = dict(
 if (__name__ == "__main__"):
     draws = [pages.search.draw, pages.gayming_button.draw, pages.messages_button.draw]
 
+    pages.search.ready()
+    pages.gayming_button.ready()
+    pages.messages_button.ready()
+
     def draw_window():
         # print(hovershift2)
         # Fill the screen with white

@@ -1,7 +1,7 @@
 from main import pygame
 import os
 import sys
-import flappybird.flappybird as flappybird
+import flappybird.flappybird as flappybirdgame
 # from main import WIDTH, HEIGHT
 # import screen from main
 pygame.init()
@@ -12,7 +12,7 @@ WIDTH = display_info.current_w - 100
 HEIGHT = display_info.current_h - 100
 
 games = {
-    'flappybird': flappybird,
+    'flappybird': None,
     'basketrandom': None
 }
 
@@ -54,7 +54,7 @@ def show(game, event, buttonsnum):
 def set_game(name):
     global currentGame
     if name in games:
-        currentGame = games[name].main()
+        currentGame = games[name]
     else:
         currentGame = None
 
@@ -73,9 +73,17 @@ def hide():
     draw_params = []
     pass
 
+def ready():
+    for game in {
+        'flappybird': flappybirdgame,
+        'basketrandom': None
+    }.items():
+        if (game[1] != None):
+            games[game[0]] = game[1].main()
+
 def draw(game):
-    if (currentGame != None):
-        currentGame()
-    elif len(draw_params) > 0:
+    if len(draw_params) > 0:
         for params in draw_params:
             params[0](*params[1])
+    if (currentGame != None):
+        game.get('screen').blit(currentGame(), (0, 0))
