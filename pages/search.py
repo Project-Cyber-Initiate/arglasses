@@ -33,6 +33,9 @@ def show(game, event, buttonsnum):
         print("Error:", e)
         pass
 
+def event(game, event):
+    pass
+
 def hide():
     global draw_params
     draw_params = []

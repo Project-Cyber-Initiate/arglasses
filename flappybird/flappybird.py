@@ -6,8 +6,9 @@ import math
 import os
 from random import randint
 from collections import deque
+from main import game
 
-import pygame
+pygame = game.get('pygame')
 from pygame.locals import *
 
 
@@ -314,12 +315,9 @@ def main():
     example), this function is called.
     """
 
-    pygame.init()
+    display_surface = game.get('screen')
 
-    display_surface = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-    pygame.display.set_caption('Pygame Flappy Bird')
-
-    clock = pygame.time.Clock()
+    clock = game.get('clock')
     score_font = pygame.font.SysFont(None, 32, bold=True)  # default font
     images = load_images()
 
@@ -333,9 +331,10 @@ def main():
     frame_clock = 0  # this counter is only incremented if the game isn't paused
     score = 0
     done = paused = False
-    while not done:
-        clock.tick(FPS)
-
+    def runGame():
+        nonlocal display_surface, clock, score_font, images, bird, pipes, frame_clock, score, done, paused
+        if done:
+            return print("Game Over")
         # Handle this 'manually'.  If we used pygame.time.set_timer(),
         # pipe addition would be messed up when paused.
         if not (paused or frame_clock % msec_to_frames(PipePair.ADD_INTERVAL)):
@@ -353,7 +352,7 @@ def main():
                 bird.msec_to_climb = Bird.CLIMB_DURATION
 
         if paused:
-            continue  # don't draw anything
+            return  # don't draw anything
 
         # check for collisions
         pipe_collision = any(p.collides_with(bird) for p in pipes)
@@ -383,10 +382,9 @@ def main():
         score_x = WIN_WIDTH/2 - score_surface.get_width()/2
         display_surface.blit(score_surface, (score_x, PipePair.PIECE_HEIGHT))
 
-        pygame.display.flip()
         frame_clock += 1
-    print('Game over! Score: %i' % score)
-    pygame.quit()
+
+    return runGame
 
 
 if __name__ == '__main__':

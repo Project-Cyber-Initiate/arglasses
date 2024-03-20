@@ -17,10 +17,6 @@ import pages.search
 import pages.gayming_button
 import pages.messages_button
 
-
-
-
-
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
 WIDTH = display_info.current_w - 100
@@ -95,6 +91,10 @@ if (__name__ == "__main__"):
         # draw_window()
         # Handle events
         for event in pygame.event.get():
+            pages.search.event(game, event)
+            pages.gayming_button.event(game, event)
+            pages.messages_button.event(game, event)
+
             if event.type == pygame.QUIT:
                 game['running'] = False
             elif event.type == pygame.MOUSEMOTION:

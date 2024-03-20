@@ -1,6 +1,7 @@
-import pygame
+from main import pygame
 import os
 import sys
+import flappybird.flappybird as flappybird
 # from main import WIDTH, HEIGHT
 # import screen from main
 pygame.init()
@@ -10,9 +11,14 @@ display_info = pygame.display.Info()
 WIDTH = display_info.current_w - 100
 HEIGHT = display_info.current_h - 100
 
+games = {
+    'flappybird': flappybird,
+    'basketrandom': None
+}
+
 
 Red = (255, 0, 0)
-
+currentGame = None
 clicks = 0
 
 def is_even(number):
@@ -45,12 +51,31 @@ def show(game, event, buttonsnum):
         print("Error:", e)
         pass
 
+def set_game(name):
+    global currentGame
+    if name in games:
+        currentGame = games[name].main()
+    else:
+        currentGame = None
+
+def event(game, event):
+    global currentGame
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.button == 1:
+            if pygame.Rect(450, 250, 200, 200).collidepoint(event.pos):
+                print("Basketrandom")
+            if pygame.Rect(800, 250, 200, 200).collidepoint(event.pos):
+                set_game("flappybird")
+    pass
+
 def hide():
     global draw_params
     draw_params = []
     pass
 
 def draw(game):
-    if len(draw_params) > 0:
+    if (currentGame != None):
+        currentGame()
+    elif len(draw_params) > 0:
         for params in draw_params:
             params[0](*params[1])

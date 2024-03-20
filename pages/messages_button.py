@@ -18,7 +18,6 @@ def is_even(number):
 messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'nomessages.png')), (900,500))
 background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')), (1200,600))
 
-
 def show(game, event, buttonsnum):
     global clicks, draw_params
     clicks += 1
@@ -32,6 +31,9 @@ def show(game, event, buttonsnum):
     except Exception as e:
         print("Drawing Error:", e)
         pass
+
+def event(game, event):
+    pass
 
 def hide():
     global draw_params
