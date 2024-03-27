@@ -19,8 +19,8 @@ import pages.messages_button
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w - 100
-HEIGHT = display_info.current_h - 100
+WIDTH = display_info.current_w
+HEIGHT = display_info.current_h - 50
 FPS = 60
 scalex=1
 scaley=1
@@ -59,6 +59,8 @@ hover_background1 = 0
 hover_background2 = 0
 hover_background3 = 0
 
+print (WIDTH)
+print (HEIGHT)
 game = dict(
     zip(
         ['pygame', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running'], 
@@ -117,11 +119,11 @@ if (__name__ == "__main__"):
                     pages.search.hide()
                     pages.gayming_button.hide()
 
-            game['search'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex'), game.get('recth')*game.get('scaley'))))
+            game['search'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex')*.9, game.get('recth')*game.get('scaley'))))
             game['search_background'] = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))
-            game['gayming'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1')*.95, game.get('recth')*game.get('scaley1')*.95))
+            game['gayming'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1')*.88, game.get('recth')*game.get('scaley1')*.95))
             game['gayming_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (game.get('rectw')*game.get('scalex1')*game.get('hover_background2')*2.1, game.get('recth')*game.get('scaley1')*1.2))
-            game['messages'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2'), game.get('recth')*game.get('scaley2')))
+            game['messages'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
             game['messages_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
         
             
