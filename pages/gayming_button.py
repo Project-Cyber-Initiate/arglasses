@@ -1,6 +1,7 @@
 from main import pygame
 import os
 import sys
+import subprocess
 import flappybird.flappybird as flappybirdgame
 # from main import WIDTH, HEIGHT
 # import screen from main
@@ -15,7 +16,9 @@ games = {
     'flappybird': None,
     'basketrandom': None
 }
-
+def run_oled_code():
+    oled_script_path = r"C:\Users\veerk\Downloads\arglasses software\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
+    subprocess.run(["python", oled_script_path])
 
 Red = (255, 0, 0)
 currentGame = None
@@ -44,6 +47,7 @@ def show(game, event, buttonsnum):
         else:
             draw_params.append((game.get("screen").blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
             draw_params.append((game.get("screen").blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
+            run_oled_code()
     except Exception as e:
         print("Error:", e)
         pass

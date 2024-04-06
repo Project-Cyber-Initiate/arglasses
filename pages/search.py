@@ -1,12 +1,13 @@
 import pygame
 import os
 import sys
+import subprocess
+
 pygame.init()
 draw_params = []
 display_info = pygame.display.Info()
 WIDTH = display_info.current_w * .76
 HEIGHT = display_info.current_h * .76
-
 
 Red = (255, 0, 0)
 
@@ -21,6 +22,11 @@ search_surface = pygame.transform.scale(pygame.image.load(os.path.join('png', 'g
 background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')),
                                     (int(WIDTH * 0.678), int(HEIGHT * 0.357)))
 
+# Function to execute OLED display code
+def run_oled_code():
+    oled_script_path = r"C:\Users\veerk\Downloads\arglasses software\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
+    subprocess.run(["python", oled_script_path])
+
 def show(game, event, buttonsnum):
     global clicks, draw_params
     clicks += 1
@@ -31,6 +37,8 @@ def show(game, event, buttonsnum):
         else:
             draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.211), int(HEIGHT * 0.329)))))
             draw_params.append((game.get("screen").blit, (search_surface, (int(WIDTH * 0.381), int(HEIGHT * 0.329)))))
+            # Run OLED display code when button is clicked
+            run_oled_code()
     except Exception as e:
         print("Error:", e)
         pass

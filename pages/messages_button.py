@@ -1,11 +1,13 @@
 import pygame
 import os
+import subprocess
 import sys
 pygame.init()
 draw_params = []
 display_info = pygame.display.Info()
 WIDTH = display_info.current_w * .95
 HEIGHT = WIDTH/2
+
 
 Red = (255, 0, 0)
 
@@ -20,6 +22,10 @@ messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'nomessa
 background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')),
                                     (int(WIDTH * 1.1), int(HEIGHT)))
 
+def run_oled_code():
+    oled_script_path = r"C:\Users\veerk\Downloads\arglasses software\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_messages_test.py"
+    subprocess.run(["python", oled_script_path])
+
 def show(game, event, buttonsnum):
     global clicks, draw_params
     clicks += 1
@@ -30,6 +36,7 @@ def show(game, event, buttonsnum):
         else:
             draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.042), int(HEIGHT * 0.07)))))
             draw_params.append((game.get("screen").blit, (messages, (int(WIDTH * 0.169), int(HEIGHT * 0.143)))))
+            run_oled_code()
     except Exception as e:
         print("Drawing Error:", e)
         pass
