@@ -19,8 +19,8 @@ import pages.messages_button
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w - 100
-HEIGHT = display_info.current_h - 100
+WIDTH = display_info.current_w * .95
+HEIGHT = WIDTH/2
 FPS = 60
 scalex=1
 scaley=1
@@ -28,6 +28,8 @@ scalex1=1
 scaley1=1
 scalex2=1
 scaley2=1
+searchdown = 0
+
 scx=.95
 scy=.95
 initialize1=0
@@ -77,6 +79,7 @@ if (__name__ == "__main__"):
         # print(hovershift2)
         # Fill the screen with white
         # screen.blit(frame, (0, 0))
+        # print (searchdown)
         game.get('screen').fill(WHITE)
         game.get('screen').blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-20))
         game.get('screen').blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
@@ -84,6 +87,11 @@ if (__name__ == "__main__"):
         game.get('screen').blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0]+10, game.get('recty') + game.get('hovershift2')[1]+10))
         game.get('screen').blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
         game.get('screen').blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
+        if game.get(initialize1) == 1:
+            None
+        else:
+            game.get('screen').blit(game.get('oled_show'), (game.get('WIDTH')*.8, game.get('HEIGHT')*.05))
+
 
         for draw in draws:
             draw(game)
@@ -105,14 +113,17 @@ if (__name__ == "__main__"):
                 game['scalex'], game['scaley'], game['scalex1'], game['scaley1'], game['scalex2'], game['scaley2'], game['initialize1'], game['initialize2'], game['initialize3'], game['hover_background1'], game['hover_background2'], game['hover_background3'] = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth')))
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game.get('initialize1'):
+                    searchdown = 1
                     pages.search.show(game, event, buttonsnum)
                     pages.gayming_button.hide()
                     pages.messages_button.hide()
                 elif game.get('initialize2'):
+                    searchdown = 0
                     pages.gayming_button.show(game, event, buttonsnum)
                     pages.search.hide()
                     pages.messages_button.hide()
                 elif game.get('initialize3'):
+                    searchdown = 0
                     pages.messages_button.show(game, event, buttonsnum)
                     pages.search.hide()
                     pages.gayming_button.hide()
@@ -123,6 +134,8 @@ if (__name__ == "__main__"):
             game['gayming_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (game.get('rectw')*game.get('scalex1')*game.get('hover_background2')*2.1, game.get('recth')*game.get('scaley1')*1.2))
             game['messages'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2'), game.get('recth')*game.get('scaley2')))
             game['messages_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
+            game['messages_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
+            game['oled_show'] = pygame.transform.scale(pygame.image.load(os.path.join('pages', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
         
             
         # print(game.get('initialize2'))

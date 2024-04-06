@@ -8,8 +8,8 @@ pygame.init()
 draw_params = []
 # print (WIDTH)
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w - 100
-HEIGHT = display_info.current_h - 100
+WIDTH = display_info.current_w * .76
+HEIGHT = display_info.current_h * .76
 
 games = {
     'flappybird': None,
@@ -25,28 +25,25 @@ def is_even(number):
     return number % 2 == 0
 
 
-basketrandom = pygame.transform.scale(pygame.image.load(os.path.join('png', 'basketrandom_logo.jpg')), (200,200))
-flappybird = pygame.transform.scale(pygame.image.load(os.path.join('png', 'flappybird_logo.png')), (200,200))
-
+# Adjusted sizes based on proportions of WIDTH and HEIGHT
+basketrandom = pygame.transform.scale(pygame.image.load(os.path.join('png', 'basketrandom_logo.jpg')),
+                                      (int(WIDTH * 0.169), int(HEIGHT * 0.286)))
+flappybird = pygame.transform.scale(pygame.image.load(os.path.join('png', 'flappybird_logo.png')),
+                                     (int(WIDTH * 0.169), int(HEIGHT * 0.286)))
 
 def show(game, event, buttonsnum):
     global clicks, draw_params
     clicks += 1
-    box = pygame.Rect(0, 0, 200, 32)
+    box = pygame.Rect(0, 0, int(WIDTH * 0.169), int(HEIGHT * 0.046))
     text = str(clicks)
-    font = pygame.font.Font(None, 32)
+    font = pygame.font.Font(None, int(WIDTH * 0.046))
     text = font.render(text, True, (255, 255, 255))
-    # draw_params.append((pygame.draw.rect, (game.get('screen'), (0, 0, 0), box)))
-    # draw_params.append((game.get('screen').blit, (text, (10, 10))))
     try:
         if len(draw_params) > 0:
             draw_params = []
-            pass
         else:
-            draw_params.append((game.get("screen").blit, (basketrandom, (450, 250))))
-            draw_params.append((game.get("screen").blit, (flappybird, (800, 250))))
-
-
+            draw_params.append((game.get("screen").blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
+            draw_params.append((game.get("screen").blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
     except Exception as e:
         print("Error:", e)
         pass
@@ -62,9 +59,9 @@ def event(game, event):
     global currentGame
     if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
-            if pygame.Rect(450, 250, 200, 200).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.381), int(HEIGHT * 0.357), int(WIDTH * 0.169), int(HEIGHT * 0.286)).collidepoint(event.pos):
                 print("Basketrandom")
-            if pygame.Rect(800, 250, 200, 200).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.678), int(HEIGHT * 0.357), int(WIDTH * 0.169), int(HEIGHT * 0.286)).collidepoint(event.pos):
                 set_game("flappybird")
     pass
 

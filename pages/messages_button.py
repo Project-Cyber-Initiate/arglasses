@@ -4,9 +4,8 @@ import sys
 pygame.init()
 draw_params = []
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w - 100
-HEIGHT = display_info.current_h - 100
-
+WIDTH = display_info.current_w * .95
+HEIGHT = WIDTH/2
 
 Red = (255, 0, 0)
 
@@ -15,8 +14,11 @@ clicks = 0
 def is_even(number):
     return number % 2 == 0
 
-messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'nomessages.png')), (900,500))
-background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')), (1200,600))
+# Adjusted sizes based on proportions of WIDTH and HEIGHT
+messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'nomessages.png')),
+                                  (int(WIDTH* .6), int(HEIGHT*.6)))
+background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')),
+                                    (int(WIDTH * 1.1), int(HEIGHT)))
 
 def show(game, event, buttonsnum):
     global clicks, draw_params
@@ -26,15 +28,14 @@ def show(game, event, buttonsnum):
             draw_params = []
             pass
         else:
-            draw_params.append((game.get("screen").blit, (background, (50, 75))))
-            draw_params.append((game.get("screen").blit, (messages, (200, 100))))
+            draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.042), int(HEIGHT * 0.07)))))
+            draw_params.append((game.get("screen").blit, (messages, (int(WIDTH * 0.169), int(HEIGHT * 0.143)))))
     except Exception as e:
         print("Drawing Error:", e)
         pass
 
 def event(game, event):
     pass
-
 
 def ready():
     pass
