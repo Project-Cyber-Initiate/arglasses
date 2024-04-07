@@ -25,7 +25,10 @@ background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justb
                                     (int(WIDTH * 1.1), int(HEIGHT)))
 
 def run_oled_code():
-    oled_script_path = r"C:\Users\Veer\Documents\GitHub\arglasses\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_messages_test.py"
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_messages_test.py"
+    subprocess.run(["python", oled_script_path])
+def run_oled_code2():
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_test.py"
     subprocess.run(["python", oled_script_path])
 
 def show(game, event, buttonsnum):
@@ -33,8 +36,8 @@ def show(game, event, buttonsnum):
     clicks += 1
     try:
         if len(draw_params) > 0:
+            run_oled_code2()
             draw_params = []
-            pass
         else:
             draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.042), int(HEIGHT * 0.07)))))
             draw_params.append((game.get("screen").blit, (messages, (int(WIDTH * 0.169), int(HEIGHT * 0.143)))))
@@ -53,6 +56,10 @@ def hide():
     global draw_params
     draw_params = []
     pass
+
+
+def oled ():
+    run_oled_code2
 
 def draw(game):
     if len(draw_params) > 0:

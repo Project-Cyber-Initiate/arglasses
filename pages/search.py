@@ -25,22 +25,26 @@ background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justb
 
 # Function to execute OLED display code
 def run_oled_code():
-    oled_script_path = r"C:\Users\Veer\Documents\GitHub\arglasses\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
     subprocess.run(["python", oled_script_path])
-
+def run_oled_code2():
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_test.py"
+    subprocess.run(["python", oled_script_path])
+    
 def show(game, event, buttonsnum):
     global clicks, draw_params
     clicks += 1
     try:
         if len(draw_params) > 0:
+            run_oled_code2()
             draw_params = []
-            pass
         else:
             draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.211), int(HEIGHT * 0.329)))))
             draw_params.append((game.get("screen").blit, (search_surface, (int(WIDTH * 0.381), int(HEIGHT * 0.329)))))
             # Run OLED display code when button is clicked
             run_oled_code()
     except Exception as e:
+        run_oled_code2
         print("Error:", e)
         pass
 
@@ -53,7 +57,9 @@ def ready():
 def hide():
     global draw_params
     draw_params = []
-    pass
+
+def oled ():
+    run_oled_code2
 
 def draw(game):
     if len(draw_params) > 0:

@@ -16,6 +16,7 @@ import button
 import pages.search
 import pages.gayming_button
 import pages.messages_button
+import subprocess
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
@@ -63,6 +64,13 @@ hover_background3 = 0
 
 print (WIDTH)
 print (HEIGHT)
+
+def run_oled_code():
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_test.py"
+    subprocess.run(["python", oled_script_path])
+    
+run_oled_code()
+    
 game = dict(
     zip(
         ['pygame', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running'], 

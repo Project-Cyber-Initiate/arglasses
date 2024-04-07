@@ -16,7 +16,10 @@ games = {
     'basketrandom': None
 }
 def run_oled_code():
-    oled_script_path = r"C:\Users\Veer\Documents\GitHub\arglasses\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_gaming_test.py"
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_gaming_test.py"
+    subprocess.run(["python", oled_script_path])
+def run_oled_code2():
+    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_test.py"
     subprocess.run(["python", oled_script_path])
 
 Red = (255, 0, 0)
@@ -41,6 +44,7 @@ def show(game, event, buttonsnum):
     text = font.render(text, True, (255, 255, 255))
     try:
         if len(draw_params) > 0:
+            run_oled_code2()
             draw_params = []
         else:
             draw_params.append((game.get("screen").blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
@@ -71,6 +75,10 @@ def hide():
     global draw_params
     draw_params = []
     pass
+
+
+def oled ():
+    run_oled_code2
 
 def ready():
     for game in {
