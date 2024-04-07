@@ -5,12 +5,13 @@ import subprocess
 
 pygame.init()
 draw_params = []
+
+# Set the new dimensions
 display_info = pygame.display.Info()
 WIDTH = display_info.current_w * .76
 HEIGHT = display_info.current_h * .76
 
 Red = (255, 0, 0)
-
 clicks = 0
 
 def is_even(number):

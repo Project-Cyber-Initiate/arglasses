@@ -3,14 +3,13 @@ import os
 import sys
 import subprocess
 import flappybird.flappybird as flappybirdgame
-# from main import WIDTH, HEIGHT
-# import screen from main
+
 pygame.init()
 draw_params = []
-# print (WIDTH)
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w * .76
-HEIGHT = display_info.current_h * .76
+WIDTH = display_info.current_w - 100
+HEIGHT = display_info.current_h - 100
+# Setting the new dimensions
 
 games = {
     'flappybird': None,
@@ -26,7 +25,6 @@ clicks = 0
 
 def is_even(number):
     return number % 2 == 0
-
 
 # Adjusted sizes based on proportions of WIDTH and HEIGHT
 basketrandom = pygame.transform.scale(pygame.image.load(os.path.join('png', 'basketrandom_logo.jpg')),
