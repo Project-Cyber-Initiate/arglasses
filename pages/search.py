@@ -8,8 +8,8 @@ draw_params = []
 
 # Set the new dimensions
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w * .76
-HEIGHT = display_info.current_h * .76
+WIDTH = display_info.current_w * .95
+HEIGHT = WIDTH/2
 
 Red = (255, 0, 0)
 clicks = 0
@@ -25,7 +25,7 @@ background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justb
 
 # Function to execute OLED display code
 def run_oled_code():
-    oled_script_path = r"C:\Users\veerk\Downloads\arglasses software\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
+    oled_script_path = r"C:\Users\Veer\Documents\GitHub\arglasses\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
     subprocess.run(["python", oled_script_path])
 
 def show(game, event, buttonsnum):

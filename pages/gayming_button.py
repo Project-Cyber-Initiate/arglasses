@@ -7,8 +7,8 @@ import flappybird.flappybird as flappybirdgame
 pygame.init()
 draw_params = []
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w - 100
-HEIGHT = display_info.current_h - 100
+WIDTH = display_info.current_w * .95
+HEIGHT = WIDTH/2
 # Setting the new dimensions
 
 games = {
@@ -16,7 +16,7 @@ games = {
     'basketrandom': None
 }
 def run_oled_code():
-    oled_script_path = r"C:\Users\veerk\Downloads\arglasses software\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_search_test.py"
+    oled_script_path = r"C:\Users\Veer\Documents\GitHub\arglasses\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_gaming_test.py"
     subprocess.run(["python", oled_script_path])
 
 Red = (255, 0, 0)

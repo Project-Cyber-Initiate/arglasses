@@ -137,7 +137,7 @@ if (__name__ == "__main__"):
             game['messages'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
             game['messages_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
             game['messages_background'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
-            game['oled_show'] = pygame.transform.scale(pygame.image.load(os.path.join('pages', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
+            game['oled_show'] = pygame.transform.scale(pygame.image.load(os.path.join('png', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
         
             
         # print(game.get('initialize2'))

@@ -25,7 +25,7 @@ background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justb
                                     (int(WIDTH * 1.1), int(HEIGHT)))
 
 def run_oled_code():
-    oled_script_path = r"C:\Users\veerk\Downloads\arglasses software\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_messages_test.py"
+    oled_script_path = r"C:\Users\Veer\Documents\GitHub\arglasses\OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_messages_test.py"
     subprocess.run(["python", oled_script_path])
 
 def show(game, event, buttonsnum):
