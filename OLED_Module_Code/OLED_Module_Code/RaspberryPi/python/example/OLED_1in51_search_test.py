@@ -29,7 +29,7 @@ try:
     logging.info ("***draw image")
     Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
     png_path = os.path.join(picdir, 'search_oled.png')  # Replace 'your_png_file.png' with your PNG file name
-    png_image = Image.open(png_path)
+    png_image = Image.open(os.path.join(picdir, 'search_oled.bmp'))
     Himage2.paste(png_image, (0, 0))
     Himage2 = Himage2.rotate(180)
     disp.ShowImage(disp.getbuffer(Himage2)) 
