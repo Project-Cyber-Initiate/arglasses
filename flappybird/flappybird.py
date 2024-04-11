@@ -11,6 +11,8 @@ from main import game
 pygame = game.get('pygame')
 from pygame.locals import *
 
+print(pygame)
+
 
 FPS = 60
 ANIMATION_SPEED = 0.18  # pixels per millisecond
@@ -308,7 +310,7 @@ def msec_to_frames(milliseconds, fps=FPS):
     return fps * milliseconds / 1000.0
 
 
-def main():
+def main(close):
     """The application's entry point.
 
     If someone executes this module (instead of importing it, for
@@ -364,6 +366,9 @@ def main():
             score_surface = score_font.render(str("Game Over"), True, (255, 255, 255))
             score_x = WIN_WIDTH/2 - score_surface.get_width()/2
             display_surface.blit(score_surface, (score_x, PipePair.PIECE_HEIGHT))
+        
+
+            close()
 
             frame_clock += 1
             return display_surface
@@ -374,7 +379,7 @@ def main():
                 break
             elif e.type == KEYUP and e.key in (K_PAUSE, K_p):
                 paused = not paused
-            elif e.type == MOUSEBUTTONUP or (e.type == KEYUP and
+            elif e.type == MOUSEBUTTONDOWN or (e.type == KEYUP and
                     e.key in (K_UP, K_RETURN, K_SPACE)):
                 bird.msec_to_climb = Bird.CLIMB_DURATION
 

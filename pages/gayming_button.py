@@ -86,7 +86,12 @@ def ready():
         'basketrandom': None
     }.items():
         if (game[1] != None):
-            games[game[0]] = game[1].main()
+            name = game[0]
+            fn = game[1]
+            def close():
+                games[name] = fn.main(close)
+                set_game(None)
+            games[game[0]] = game[1].main(close)
 
 def draw(game):
     if len(draw_params) > 0:
