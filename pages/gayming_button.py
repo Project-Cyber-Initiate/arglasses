@@ -16,10 +16,10 @@ games = {
     'basketrandom': None
 }
 def run_oled_code():
-    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_gaming_test.py"
+    oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_gaming_test.py"
     subprocess.run(["python", oled_script_path])
 def run_oled_code2():
-    oled_script_path = r"OLED_Module_Code\OLED_Module_Code\RaspberryPi\python\example\OLED_1in51_test.py"
+    oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_test.py"
     subprocess.run(["python", oled_script_path])
 
 Red = (255, 0, 0)
