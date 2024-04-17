@@ -1,8 +1,8 @@
 import pygame
 import sys
 import os 
-import cv2
-import numpy as np
+#import cv2
+#import numpy as np
 from pygame.locals import *
 from PIL import Image 
 
@@ -176,13 +176,13 @@ if (__name__ == "__main__"):
                     pages.gayming_button.hide()
             
         # print(game.get('initialize2'))
-        ret, frame = (None, None)#cap.read()
-        if ret:
-            # Convert the OpenCV frame to a Pygame surface
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame = np.rot90(frame)  # Rotate the frame 90 degrees
-            frame = pygame.surfarray.make_surface(frame)
-            frame = pygame.transform.scale(frame, (game.get('WIDTH'), game.get('HEIGHT')+ 200))
+        # ret, frame = (None, None)#cap.read()
+        # if ret:
+        #     # Convert the OpenCV frame to a Pygame surface
+        #     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        #     frame = np.rot90(frame)  # Rotate the frame 90 degrees
+        #     frame = pygame.surfarray.make_surface(frame)
+        #     frame = pygame.transform.scale(frame, (game.get('WIDTH'), game.get('HEIGHT')+ 200))
 
         game.hovershift1 = (game.get('rectw') * (1 - game.get('scalex')) * .5 * game.get('initialize1'), game.get('recth') * (1 - game.get('scaley')) * .5 * game.get('initialize1'))
         game.hovershift2 = (game.get('rectw') * (1 - game.get('scalex1')) * .5 * game.get('initialize2'), game.get('recth') * (1 - game.get('scaley1')) * .5 * game.get('initialize2'))
