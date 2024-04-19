@@ -61,10 +61,10 @@ hover_background3 = 0
 print (WIDTH)
 print (HEIGHT)
 
-def run_oled_code():
+async def run_oled_code():
     oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_test.py"
     subprocess.run(["python", oled_script_path])
-    
+   
 run_oled_code()
 
 class Game:
