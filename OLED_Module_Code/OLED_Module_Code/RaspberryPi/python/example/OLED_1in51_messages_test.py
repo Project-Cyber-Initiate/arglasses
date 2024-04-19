@@ -34,7 +34,7 @@ try:
     Himage2 = Himage2.rotate(180)
     disp.ShowImage(disp.getbuffer(Himage2)) 
     # time.sleep(3)
-    disp.clear()
+    # disp.clear()
 
 except IOError as e:
     logging.info(e)
