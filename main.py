@@ -63,9 +63,18 @@ print (HEIGHT)
 
 def run_oled_code():
     oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_test.py"
-    subprocess.Popen(["python", oled_script_path])
+    process = subprocess.Popen(["python", oled_script_path], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    
+    def send(data):
+        process.stdin.write(data)
+        process.stdin.flush()
+    
+    def read():
+        return process.stdout.readline()
+    
+    return (send, read)
    
-run_oled_code()
+sendToChild, readFromChild = run_oled_code()
 
 class Game:
     def __init__(self):
@@ -79,12 +88,18 @@ class Game:
             try:
                 self.__dict__[key] = value
                 if key in ['rectw', 'recth', 'scalex', 'scaley', 'initialize1', 'hover_background1']:
+                    if key == 'initialize1' and value == 1:
+                        sendToChild('search')
                     game.search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex')*.9, game.get('recth')*game.get('scaley'))))
                     game.search_background = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))
                 if key in ['rectw', 'recth', 'scalex1', 'scaley1', 'initialize2', 'hover_background2']:
+                    if key == 'initialize2' and value == 1:
+                        sendToChild('gaming')
                     game.gayming = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1')*.88, game.get('recth')*game.get('scaley1')*.95))
                     game.gayming_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (game.get('rectw')*game.get('scalex1')*game.get('hover_background2')*2.1, game.get('recth')*game.get('scaley1')*1.2))
                 if key in ['rectw', 'recth', 'scalex2', 'scaley2' 'initialize3', 'hover_background3']:
+                    if key == 'initialize3' and value == 1:
+                        sendToChild('messages')
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
             except:

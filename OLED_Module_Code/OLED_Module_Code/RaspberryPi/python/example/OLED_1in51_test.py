@@ -15,6 +15,11 @@ from waveshare_OLED import OLED_1in51
 from PIL import Image,ImageDraw,ImageFont
 logging.basicConfig(level=logging.DEBUG)
 
+currentPath = "main_page.bmp"
+
+def picpath(path):
+    return os.path.join(picdir, path)
+
 try:
     disp = OLED_1in51.OLED_1in51()
 
@@ -28,7 +33,7 @@ try:
     # Create blank image for drawing   
     logging.info ("***draw image")
     Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
-    bmp = Image.open(os.path.join(picdir, 'main_page.bmp'))
+    bmp = Image.open(picpath(currentPath))
     Himage2.paste(bmp, (0,0))
     Himage2=Himage2.rotate(180) 	
     disp.ShowImage(disp.getbuffer(Himage2)) 
@@ -42,3 +47,7 @@ except KeyboardInterrupt:
     logging.info("ctrl + c:")
     disp.module_exit()
     exit()
+
+while True:
+    entry = input()
+    print(entry)
