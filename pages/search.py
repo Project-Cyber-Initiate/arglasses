@@ -25,9 +25,11 @@ background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justb
 
 # Function to execute OLED display code
 def run_oled_code():
+    return
     oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_search_test.py"
     subprocess.Popen(["python", oled_script_path])
 def run_oled_code2():
+    return
     oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_test.py"
     subprocess.Popen(["python", oled_script_path])
     
