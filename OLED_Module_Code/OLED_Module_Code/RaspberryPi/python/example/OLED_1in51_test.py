@@ -20,6 +20,8 @@ currentPath = "main_page.bmp"
 def picpath(path):
     return os.path.join(picdir, path)
 
+print("listening for inputs nig")
+
 try:
     disp = OLED_1in51.OLED_1in51()
 
