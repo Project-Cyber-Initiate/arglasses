@@ -1,4 +1,4 @@
-from main import pygame
+from main import game, pygame
 import os
 import sys
 import subprocess
@@ -7,8 +7,6 @@ import flappybird.flappybird as flappybirdgame
 pygame.init()
 draw_params = []
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w * .95
-HEIGHT = WIDTH/2
 # Setting the new dimensions
 
 games = {
@@ -27,6 +25,9 @@ def run_oled_code2():
 Red = (255, 0, 0)
 currentGame = None
 clicks = 0
+
+WIDTH = game.WIDTH
+HEIGHT = game.HEIGHT
 
 def is_even(number):
     return number % 2 == 0

@@ -16,7 +16,7 @@ import subprocess
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w * .95
+WIDTH = display_info.current_w * .75
 HEIGHT = WIDTH/2
 FPS = 60
 scalex=1
@@ -47,7 +47,7 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 rectw = WIDTH//6.5
 recth = HEIGHT//4
-recty = HEIGHT//2 - recth/2
+recty = HEIGHT//2.5 - recth/2
 rectx = WIDTH//12
 rectx_2 = rectx * 0.3
 
@@ -93,7 +93,7 @@ class Game:
                     game.search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex')*.9, game.get('recth')*game.get('scaley'))))
                     game.search_background = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))
                 if key in ['rectw', 'recth', 'scalex1', 'scaley1', 'initialize2', 'hover_background2']:
-                    game.gayming = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1')*.88, game.get('recth')*game.get('scaley1')*.95))
+                    game.gayming = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1')*.85, game.get('recth')*game.get('scaley1')))
                     game.gayming_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (game.get('rectw')*game.get('scalex1')*game.get('hover_background2')*2.1, game.get('recth')*game.get('scaley1')*1.2))
                 if key in ['rectw', 'recth', 'scalex2', 'scaley2' 'initialize3', 'hover_background3']:
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
@@ -131,10 +131,10 @@ if (__name__ == "__main__"):
         game.oled_show = pygame.transform.scale(pygame.image.load(os.path.join('png', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
         
         game.get('screen').fill(WHITE)
-        game.get('screen').blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-20))
+        game.get('screen').blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
         game.get('screen').blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
-        game.get('screen').blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0]+10, game.get('recty') + game.get('hovershift2')[1]-10))
-        game.get('screen').blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0]+10, game.get('recty') + game.get('hovershift2')[1]+10))
+        game.get('screen').blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0], game.get('recty') + game.get('hovershift2')[1]-10))
+        game.get('screen').blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + 10, game.get('recty') + game.get('hovershift2')[1]+4))
         game.get('screen').blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
         game.get('screen').blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
         if game.get(initialize1) == 1:

@@ -1,4 +1,4 @@
-import pygame
+from main import game, pygame
 import os
 import subprocess
 import sys
@@ -8,9 +8,9 @@ draw_params = []
 
 # Set the new dimensions
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w * .95
-HEIGHT = WIDTH/2
 
+WIDTH = game.WIDTH
+HEIGHT = game.HEIGHT
 
 Red = (255, 0, 0)
 clicks = 0

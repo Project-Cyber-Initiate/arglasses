@@ -1,5 +1,5 @@
-scx = 0.9
-scy = 0.9
+scx = 0.85
+scy = 0.85
 
 
 def button(tup):
