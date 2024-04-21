@@ -50,15 +50,19 @@ try:
         if not match:
             continue
 
-        print(match.group(0), match.group(1))
+        screen = match.group(1)
 
-        if entry == "search":
+        if screen == "search":
+            currentPath = "search_oled.bmp"
             pass
-        elif entry == "gaming":
+        elif screen == "gayming":
+            currentPath = "gaming_oled.bmp"
             pass
-        elif entry == "messages":
+        elif screen == "messages":
+            currentPath = "messages_oled.bmp"
             pass
         else:
+            currentPath = "main_page.bmp"
             pass
 
         display()
