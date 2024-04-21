@@ -45,7 +45,7 @@ try:
     while True:
         entry = input()
 
-        match = re.match(r"^SCREEN\.(\w+)")
+        match = re.match(r"^SCREEN\.(\w+)", entry)
 
         if not match:
             continue
