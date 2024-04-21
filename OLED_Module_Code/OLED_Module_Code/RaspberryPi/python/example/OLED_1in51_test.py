@@ -49,5 +49,6 @@ except KeyboardInterrupt:
     exit()
 
 while True:
+    print("listening for inputs")
     entry = input()
     print(entry)
