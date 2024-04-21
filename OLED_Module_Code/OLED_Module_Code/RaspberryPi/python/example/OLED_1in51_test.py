@@ -50,7 +50,7 @@ try:
         if not match:
             continue
 
-        print(match)
+        print(match.group(0), match.group(1))
 
         if entry == "search":
             pass
