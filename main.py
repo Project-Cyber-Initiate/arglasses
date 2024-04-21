@@ -76,6 +76,8 @@ def run_oled_code():
    
 sendToChild, readFromChild = run_oled_code()
 
+sendToChild('main')
+
 class Game:
     def __init__(self):
         pass
