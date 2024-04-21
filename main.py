@@ -88,7 +88,7 @@ class Game:
             try:
                 self.__dict__[key] = value
                 if key == 'currentscreen':
-                    sendToChild(f"SCREEN.value")
+                    sendToChild(f"SCREEN.{value}")
                 if key in ['rectw', 'recth', 'scalex', 'scaley', 'initialize1', 'hover_background1']:
                     game.search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex')*.9, game.get('recth')*game.get('scaley'))))
                     game.search_background = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))

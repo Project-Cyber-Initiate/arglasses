@@ -42,6 +42,8 @@ try:
         Himage2.paste(bmp, (0,0))
         Himage2=Himage2.rotate(180) 	
         disp.ShowImage(disp.getbuffer(Himage2)) 
+    
+    display()
 
     while True:
         entry = input()
