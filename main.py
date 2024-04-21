@@ -76,8 +76,6 @@ def run_oled_code():
    
 sendToChild, readFromChild = run_oled_code()
 
-sendToChild('main')
-
 class Game:
     def __init__(self):
         pass
@@ -89,19 +87,15 @@ class Game:
         if key in self.__dict__ and value != self.__dict__.get(key):
             try:
                 self.__dict__[key] = value
+                if key == 'currentscreen':
+                    sendToChild(f"SCREEN.value")
                 if key in ['rectw', 'recth', 'scalex', 'scaley', 'initialize1', 'hover_background1']:
-                    if key == 'initialize1' and value == 1:
-                        sendToChild('search')
                     game.search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex')*.9, game.get('recth')*game.get('scaley'))))
                     game.search_background = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search_background.png')), (game.get('rectw')*game.get('scalex')*2*game.get('hover_background1'), game.get('recth')*game.get('scaley')*1.2)))
                 if key in ['rectw', 'recth', 'scalex1', 'scaley1', 'initialize2', 'hover_background2']:
-                    if key == 'initialize2' and value == 1:
-                        sendToChild('gaming')
                     game.gayming = pygame.transform.scale(pygame.image.load(os.path.join('png', 'gayming.png')), (game.get('rectw')*game.get('scalex1')*.88, game.get('recth')*game.get('scaley1')*.95))
                     game.gayming_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'Gayming_background.png')), (game.get('rectw')*game.get('scalex1')*game.get('hover_background2')*2.1, game.get('recth')*game.get('scaley1')*1.2))
                 if key in ['rectw', 'recth', 'scalex2', 'scaley2' 'initialize3', 'hover_background3']:
-                    if key == 'initialize3' and value == 1:
-                        sendToChild('messages')
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
             except:
@@ -112,8 +106,8 @@ class Game:
 game = Game()
 
 for key, value in zip(
-    ['pygame', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running'], 
-    [pygame, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True]
+    ['pygame', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen'], 
+    [pygame, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none']
 ):
     game.__setattr__(key, value)
 
@@ -178,16 +172,19 @@ if (__name__ == "__main__"):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game.get('initialize1'):
                     searchdown = 1
+                    game.set('currentscreen', 'search')
                     pages.search.show(game, event, buttonsnum)
                     pages.gayming_button.hide()
                     pages.messages_button.hide()
                 elif game.get('initialize2'):
                     searchdown = 0
+                    game.set('currentscreen', 'gayming')
                     pages.gayming_button.show(game, event, buttonsnum)
                     pages.search.hide()
                     pages.messages_button.hide()
                 elif game.get('initialize3'):
                     searchdown = 0
+                    game.set('currentscreen', 'messages')
                     pages.messages_button.show(game, event, buttonsnum)
                     pages.search.hide()
                     pages.gayming_button.hide()

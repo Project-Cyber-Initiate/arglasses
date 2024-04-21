@@ -3,6 +3,7 @@
 
 import sys
 import os
+import re
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
@@ -33,12 +34,34 @@ try:
     disp.clear()
 
     # Create blank image for drawing   
-    logging.info ("***draw image")
-    Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
-    bmp = Image.open(picpath(currentPath))
-    Himage2.paste(bmp, (0,0))
-    Himage2=Himage2.rotate(180) 	
-    disp.ShowImage(disp.getbuffer(Himage2)) 
+    def display():
+        logging.info ("***draw image")
+        Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
+        bmp = Image.open(picpath(currentPath))
+        Himage2.paste(bmp, (0,0))
+        Himage2=Himage2.rotate(180) 	
+        disp.ShowImage(disp.getbuffer(Himage2)) 
+
+    while True:
+        entry = input()
+
+        match = re.match(r"^SCREEN\.(\w+)")
+
+        if not match:
+            continue
+
+        print(match)
+
+        if entry == "search":
+            pass
+        elif entry == "gaming":
+            pass
+        elif entry == "messages":
+            pass
+        else:
+            pass
+
+        display()
     # time.sleep(3)    
     # disp.clear()
 
@@ -48,9 +71,3 @@ except IOError as e:
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
     disp.module_exit()
-    exit()
-
-while True:
-    print("listening for inputs")
-    entry = input()
-    print(entry)

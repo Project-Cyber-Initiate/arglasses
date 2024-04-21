@@ -48,6 +48,7 @@ def show(game, event, buttonsnum):
         if len(draw_params) > 0:
             run_oled_code2()
             draw_params = []
+            game.set('currentscreen', None)
         else:
             draw_params.append((game.get("screen").blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
             draw_params.append((game.get("screen").blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))

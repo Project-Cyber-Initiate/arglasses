@@ -40,6 +40,7 @@ def show(game, event, buttonsnum):
         if len(draw_params) > 0:
             run_oled_code2()
             draw_params = []
+            game.set('currentscreen', None)
         else:
             draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.042), int(HEIGHT * 0.07)))))
             draw_params.append((game.get("screen").blit, (messages, (int(WIDTH * 0.169), int(HEIGHT * 0.143)))))
