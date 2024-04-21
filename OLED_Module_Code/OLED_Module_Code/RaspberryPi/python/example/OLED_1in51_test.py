@@ -35,7 +35,6 @@ try:
 
     # Create blank image for drawing   
     def display():
-        disp.clear()
         logging.info ("***draw image")
         Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
         bmp = Image.open(picpath(currentPath))
