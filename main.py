@@ -16,7 +16,7 @@ import subprocess
 
 # Define screen dimensions and FPS
 display_info = pygame.display.Info()
-WIDTH = display_info.current_w * .75
+WIDTH = display_info.current_w * .83
 HEIGHT = WIDTH/2
 FPS = 60
 scalex=1
