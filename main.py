@@ -127,7 +127,6 @@ if (__name__ == "__main__"):
     pages.gayming_button.ready()
     pages.messages_button.ready()
 
-    game.oled_show = pygame.transform.scale(pygame.image.load(os.path.join('png', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
 
     def draw_window():
         # print(hovershift2)
@@ -142,10 +141,6 @@ if (__name__ == "__main__"):
         game.get('screen').blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + 10, game.get('recty') + game.get('hovershift2')[1]+4))
         game.get('screen').blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
         game.get('screen').blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
-        if game.get(initialize1) == 1:
-            None
-        else:
-            game.get('screen').blit(game.get('oled_show'), (game.get('WIDTH')*.8, game.get('HEIGHT')*.05))
 
 
         for draw in draws:
