@@ -76,6 +76,9 @@ def run_oled_code():
    
 sendToChild, readFromChild = run_oled_code()
 
+def passImage():
+    print('e')
+
 class Game:
     def __init__(self):
         pass
@@ -98,6 +101,8 @@ class Game:
                 if key in ['rectw', 'recth', 'scalex2', 'scaley2' 'initialize3', 'hover_background3']:
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
+                print(key)
+                passImage()
             except:
                 pass
         self.__dict__[key] = value
@@ -122,13 +127,13 @@ if (__name__ == "__main__"):
     pages.gayming_button.ready()
     pages.messages_button.ready()
 
+    game.oled_show = pygame.transform.scale(pygame.image.load(os.path.join('png', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
+
     def draw_window():
         # print(hovershift2)
         # Fill the screen with white
         # screen.blit(frame, (0, 0))
         # print (searchdown)
-
-        game.oled_show = pygame.transform.scale(pygame.image.load(os.path.join('png', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
         
         game.get('screen').fill(WHITE)
         game.get('screen').blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
