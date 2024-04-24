@@ -12,7 +12,7 @@ if os.path.exists(libdir):
 import logging    
 import time
 import traceback
-from waveshare_OLED import OLED_1in51
+#from waveshare_OLED import OLED_1in51
 from PIL import Image,ImageDraw,ImageFont
 logging.basicConfig(level=logging.DEBUG)
 
@@ -26,14 +26,14 @@ print("listening for inputs nig")
 drawbmp = None
 
 try:
-    disp = OLED_1in51.OLED_1in51()
+    '''disp = OLED_1in51.OLED_1in51()
 
     logging.info("\r1.51inch OLED ")
     # Initialize library.
     disp.Init()
     # Clear display.
     logging.info("clear display")
-    disp.clear()
+    disp.clear()'''
 
     # Create blank image for drawing   
     def display():
@@ -47,7 +47,7 @@ try:
         disp.ShowImage(disp.getbuffer(Himage2)) 
         drawbmp = None
     
-    display()
+    #display()
 
     def receiveImage():
         string = input()
@@ -84,7 +84,7 @@ try:
             currentPath = "main_page.bmp"
             pass
 
-        display()
+        #display()
     # time.sleep(3)    
     # disp.clear()
 
@@ -93,4 +93,4 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    disp.module_exit()
+    #disp.module_exit()

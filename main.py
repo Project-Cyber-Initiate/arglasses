@@ -58,11 +58,8 @@ hover_background1 = 0
 hover_background2 = 0
 hover_background3 = 0
 
-print (WIDTH)
-print (HEIGHT)
-
 def run_oled_code():
-    oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_1in51_test.py"
+    oled_script_path = r"OLED_Module_Code/OLED_Module_Code/RaspberryPi/python/example/OLED_autism.py"
     process = subprocess.Popen(["python", oled_script_path], stdin=subprocess.PIPE, stdout=sys.stdout, stderr=sys.stderr, text=True)
     
     def send(data):
@@ -73,11 +70,6 @@ def run_oled_code():
         return process.stdout.readline()
     
     return (send, read)
-   
-sendToChild, readFromChild = run_oled_code()
-
-def passImage():
-    print('e')
 
 class Game:
     def __init__(self):
@@ -101,7 +93,6 @@ class Game:
                 if key in ['rectw', 'recth', 'scalex2', 'scaley2' 'initialize3', 'hover_background3']:
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
-                print(key)
                 passImage()
             except:
                 pass
@@ -127,6 +118,16 @@ if (__name__ == "__main__"):
     pages.gayming_button.ready()
     pages.messages_button.ready()
 
+    sendToChild, readFromChild = run_oled_code()
+
+    def passImage():
+        buffer = pygame.image.tostring(screen, "RGBA")
+        string = buffer.decode('utf-8')
+
+        sendToChild("IMAGE")
+        sendToChild(string)
+
+    game.oled_show = pygame.transform.scale(pygame.image.load(os.path.join('png', 'main_page.bmp')), (game.get('rectw'), game.get('recth')*game.get('scaley2')*1.2))
 
     def draw_window():
         # print(hovershift2)
