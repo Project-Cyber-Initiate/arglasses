@@ -51,16 +51,20 @@ try:
 
     def receiveImage():
         string = input()
-        buffer = bytearray(map(int, string.split()))
-        image = Image.frombytes('1', (disp.width, disp.height), bytes(buffer))
-        image.save('amogujs.bmp')
+        try:
+            buffer = bytearray(map(int, string.split()))
+            image = Image.frombytes('1', (disp.width, disp.height), bytes(buffer))
+            image.save('amogujs.bmp')
+            return ""
+        except:
+            return string
 
 
     while True:
         entry = input()
 
         if entry == "IMAGE":
-            receiveImage()
+            entry = receiveImage()
 
         match = re.match(r"^SCREEN\.(\w+)", entry)
 

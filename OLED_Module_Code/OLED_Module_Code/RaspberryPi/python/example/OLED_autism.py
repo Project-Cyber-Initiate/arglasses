@@ -3,6 +3,7 @@
 
 import sys
 import os
+import base64
 import re
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -13,7 +14,7 @@ import logging
 import time
 import traceback
 #from waveshare_OLED import OLED_1in51
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image,ImageDraw,ImageFont,ImageOps,ImageEnhance
 logging.basicConfig(level=logging.DEBUG)
 
 currentPath = "main_page.bmp"
@@ -51,16 +52,26 @@ try:
 
     def receiveImage():
         string = input()
-        buffer = bytearray(map(int, string.split()))
-        image = Image.frombytes('1', (disp.width, disp.height), bytes(buffer))
-        image.save('amogujs.bmp')
+        try:
+            data = base64.b64decode(string)
+            #buffer = (base64.b64decode(byte))
+            image = Image.frombytes('RGBA', (128, 64), data)
+            image = ImageEnhance.Color(image).degenerate
+            image = ImageOps.grayscale(image)
+            image = ImageEnhance.Contrast(image).enhance(100)
+            #image = ImageOps.autocontrast(image, 20)
 
+            image.save('amogujs.bmp')
+            return ""
+        except Exception as e:
+            logging.error(e)
+            return string
 
     while True:
         entry = input()
 
         if entry == "IMAGE":
-            receiveImage()
+            entry = receiveImage()
 
         match = re.match(r"^SCREEN\.(\w+)", entry)
 

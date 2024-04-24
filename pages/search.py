@@ -42,8 +42,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.get("screen").blit, (background, (int(WIDTH * 0.211), int(HEIGHT * 0.329)))))
-            draw_params.append((game.get("screen").blit, (search_surface, (int(WIDTH * 0.381), int(HEIGHT * 0.329)))))
+            draw_params.append((game.screen.blit, (background, (int(WIDTH * 0.211), int(HEIGHT * 0.329)))))
+            draw_params.append((game.screen.blit, (search_surface, (int(WIDTH * 0.381), int(HEIGHT * 0.329)))))
             # Run OLED display code when button is clicked
             run_oled_code()
     except Exception as e:

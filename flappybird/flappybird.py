@@ -8,13 +8,13 @@ from random import randint
 from collections import deque
 from main import game
 
-pygame = game.get('pygame')
+import pygame
 from pygame.locals import *
 
 print(pygame)
 
 
-FPS = 60
+FPS = 30
 ANIMATION_SPEED = 0.18  # pixels per millisecond
 WIN_WIDTH = 284 * 2     # BG image size: 284x512 px; tiled twice
 WIN_HEIGHT = 512
@@ -373,7 +373,7 @@ def main(close):
             frame_clock += 1
             return display_surface
 
-        for e in pygame.event.get():
+        for e in game.pygame.event.get():
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
                 done = True
                 break
@@ -381,6 +381,7 @@ def main(close):
                 paused = not paused
             elif e.type == MOUSEBUTTONDOWN or (e.type == KEYUP and
                     e.key in (K_UP, K_RETURN, K_SPACE)):
+                print(e)
                 bird.msec_to_climb = Bird.CLIMB_DURATION
 
         if paused:

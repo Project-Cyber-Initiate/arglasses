@@ -51,8 +51,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.get("screen").blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
-            draw_params.append((game.get("screen").blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
+            draw_params.append((game.screen.blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
+            draw_params.append((game.screen.blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
             run_oled_code()
     except Exception as e:
         print("Error:", e)
