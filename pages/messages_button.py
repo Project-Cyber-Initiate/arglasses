@@ -3,7 +3,6 @@ import os
 import subprocess
 import sys
 
-pygame.init()
 draw_params = []
 
 # Set the new dimensions
@@ -42,8 +41,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.screen.blit, (background, (int(WIDTH * 0.042), int(HEIGHT * 0.07)))))
-            draw_params.append((game.screen.blit, (messages, (int(WIDTH * 0.169), int(HEIGHT * 0.143)))))
+            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.042), int(HEIGHT * 0.07)))))
+            draw_params.append((game.draw_surface.blit, (messages, (int(WIDTH * 0.169), int(HEIGHT * 0.143)))))
             run_oled_code()
     except Exception as e:
         print("Drawing Error:", e)

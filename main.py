@@ -127,12 +127,13 @@ if (__name__ == "__main__"):
 
     sendToChild, readFromChild = run_oled_code()
 
+    game.draw_surface.convert_alpha()
+
     def passImage():
-        imgscreen = pygame.Surface([128, 64], pygame.SRCALPHA, 32)
+        imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
         imgscreen = imgscreen.convert_alpha()
-        pygame.transform.scale(screen, (128, 64), imgscreen)
+        pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
         # grayscale iamge
-        imgscreen = pygame.transform.grayscale(imgscreen)
         buffer = pygame.image.tobytes(imgscreen, "RGBA")
 
         sendToChild("IMAGE")
@@ -143,16 +144,19 @@ if (__name__ == "__main__"):
         waitDraw.append(fn)
 
     def draw_window():
-        game.screen.fill(pygame.Color(255, 255, 255))
-        game.screen.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
-        game.screen.blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
-        game.screen.blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0], game.get('recty') + game.get('hovershift2')[1]-10))
-        game.screen.blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + 10, game.get('recty') + game.get('hovershift2')[1]+4))
-        game.screen.blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
-        game.screen.blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
+        game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
+        game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
+        game.draw_surface.blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
+        game.draw_surface.blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0], game.get('recty') + game.get('hovershift2')[1]-10))
+        game.draw_surface.blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + 10, game.get('recty') + game.get('hovershift2')[1]+4))
+        game.draw_surface.blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
+        game.draw_surface.blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
 
         for draw in draws:
             draw(game)
+
+        game.screen.fill(pygame.Color(255, 255, 255))
+        game.screen.blit(game.draw_surface, (0, 0))
 
         pygame.display.flip()
 

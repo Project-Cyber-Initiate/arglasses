@@ -13,7 +13,8 @@ import logging
 import time
 import traceback
 from waveshare_OLED import OLED_1in51
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image,ImageDraw,ImageFont,ImageOps,ImageEnhance
+import base64
 logging.basicConfig(level=logging.DEBUG)
 
 currentPath = "main_page.bmp"
@@ -50,15 +51,23 @@ try:
     display()
 
     def receiveImage():
+        global drawbmp
         string = input()
         try:
-            buffer = bytearray(map(int, string.split()))
-            image = Image.frombytes('1', (disp.width, disp.height), bytes(buffer))
-            image.save('amogujs.bmp')
-            return ""
-        except:
-            return string
+            data = base64.b64decode(string)
+            #buffer = (base64.b64decode(byte))
+            image = Image.frombytes('RGBA', (256, 128), data)
+            image = ImageOps.grayscale(image)
+            image = ImageEnhance.Brightness(image).enhance(100)
+            image = ImageEnhance.Contrast(image).enhance(100)
+            image = ImageOps.invert(image)
+            image = image.resize((128, 64))
 
+            drawbmp = image
+            return ""
+        except Exception as e:
+            logging.error(e)
+            return string
 
     while True:
         entry = input()

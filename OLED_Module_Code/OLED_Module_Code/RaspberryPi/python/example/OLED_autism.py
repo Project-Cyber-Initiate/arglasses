@@ -55,13 +55,14 @@ try:
         try:
             data = base64.b64decode(string)
             #buffer = (base64.b64decode(byte))
-            image = Image.frombytes('RGBA', (128, 64), data)
-            image = ImageEnhance.Color(image).degenerate
+            image = Image.frombytes('RGBA', (256, 128), data)
             image = ImageOps.grayscale(image)
+            image = ImageEnhance.Brightness(image).enhance(100)
             image = ImageEnhance.Contrast(image).enhance(100)
-            #image = ImageOps.autocontrast(image, 20)
+            image = ImageOps.invert(image)
+            image = image.resize((128, 64))
 
-            image.save('amogujs.bmp')
+            drawbmp = image
             return ""
         except Exception as e:
             logging.error(e)

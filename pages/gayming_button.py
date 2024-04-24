@@ -4,7 +4,6 @@ import sys
 import subprocess
 import flappybird.flappybird as flappybirdgame
 
-pygame.init()
 draw_params = []
 display_info = pygame.display.Info()
 # Setting the new dimensions
@@ -51,8 +50,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.screen.blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
-            draw_params.append((game.screen.blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
+            draw_params.append((game.draw_surface.blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
+            draw_params.append((game.draw_surface.blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
             run_oled_code()
     except Exception as e:
         print("Error:", e)
@@ -102,4 +101,4 @@ def draw(game):
         for params in draw_params:
             params[0](*params[1])
     if (currentGame != None):
-        game.get('screen').blit(currentGame(), (0, 0))
+        game.get('draw_surface').blit(currentGame(), (0, 0))
