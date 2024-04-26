@@ -66,8 +66,11 @@ def run_oled_code():
     process = subprocess.Popen(["python", oled_script_path], stdin=subprocess.PIPE, stdout=sys.stdout, stderr=sys.stderr, text=True)
     
     def send(data):
-        process.stdin.write(data + "\n")
-        process.stdin.flush()
+        try:
+            process.stdin.write(data + "\n")
+            process.stdin.flush()
+        except:
+            pass
     
     def read():
         return process.stdout.readline()
