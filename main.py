@@ -10,6 +10,7 @@ import time
 
 # import button
 # Initialize Pygame
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100,100)
 pygame.init()
 
 import click
