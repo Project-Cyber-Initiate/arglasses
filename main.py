@@ -137,6 +137,8 @@ if (__name__ == "__main__"):
 
     game.draw_surface.convert_alpha()
 
+    cursor_pos = (0, 0)
+
     def passImage():
         imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
         imgscreen = imgscreen.convert_alpha()
@@ -162,6 +164,8 @@ if (__name__ == "__main__"):
 
         for draw in draws:
             draw(game, events)
+
+        pygame.draw.circle(game.draw_surface, (0, 0, 0), cursor_pos, 8)
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
 
@@ -195,6 +199,7 @@ if (__name__ == "__main__"):
             if event.type == pygame.QUIT:
                 game.running = False
             elif event.type == pygame.MOUSEMOTION:
+                cursor_pos = event.pos
                 game.scalex, game.scaley, game.scalex1, game.scaley1, game.scalex2, game.scaley2, game.initialize1, game.initialize2, game.initialize3, game.hover_background1, game.hover_background2, game.hover_background3 = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth')))
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game.get('initialize1'):
