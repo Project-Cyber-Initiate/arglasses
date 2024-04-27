@@ -81,6 +81,7 @@ def hide():
     draw_params = []
     pass
 
+on = None
 
 def oled ():
     run_oled_code2
@@ -94,11 +95,15 @@ def ready():
             name = game[0]
             fn = game[1]
             def close():
+                global on
                 games[name] = fn.main(close)
                 set_game(None)
-                def on():
+                def fn():
                     _game.render += 1
+                
+                on = fn
                 onDraw(on)
+                
             games[game[0]] = game[1].main(close)
 
 def draw(game, events):
@@ -107,3 +112,6 @@ def draw(game, events):
             params[0](*params[1])
     if (currentGame != None):
         game.draw_surface.blit(currentGame(events), (0, 0))
+    if (on != None):
+        on()
+        on = None
