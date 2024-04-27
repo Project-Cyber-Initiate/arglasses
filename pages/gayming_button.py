@@ -107,6 +107,7 @@ def ready():
             games[game[0]] = game[1].main(close)
 
 def draw(game, events):
+    global on
     if len(draw_params) > 0:
         for params in draw_params:
             params[0](*params[1])
