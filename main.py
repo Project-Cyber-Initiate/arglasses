@@ -136,12 +136,16 @@ if (__name__ == "__main__"):
         imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
         imgscreen = imgscreen.convert_alpha()
         pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
-        # grayscale iamge
+        
+        # Flip the image horizontally
+        imgscreen = pygame.transform.flip(imgscreen, True, False)
+        
+        # grayscale image
         buffer = pygame.image.tobytes(imgscreen, "RGBA")
 
         sendToChild("IMAGE")
         sendToChild(str(base64.b64encode(buffer)))
-
+        
     waitDraw = []
     def onDraw(fn):
         waitDraw.append(fn)
