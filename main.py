@@ -109,6 +109,9 @@ class Game:
                 pass
         self.__dict__[key] = value
     
+waitDraw = []
+def onDraw(fn):
+    waitDraw.append(fn)
 
 game = Game()
 
@@ -146,10 +149,6 @@ if (__name__ == "__main__"):
 
         sendToChild("IMAGE")
         sendToChild(str(base64.b64encode(buffer)))
-        
-    waitDraw = []
-    def onDraw(fn):
-        waitDraw.append(fn)
 
     def draw_window(events):
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
