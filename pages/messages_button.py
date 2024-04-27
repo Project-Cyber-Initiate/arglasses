@@ -63,7 +63,7 @@ def hide():
 def oled ():
     run_oled_code2
 
-def draw(game):
+def draw(game, events):
     if len(draw_params) > 0:
         for params in draw_params:
             params[0](*params[1])

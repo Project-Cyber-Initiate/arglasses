@@ -150,7 +150,7 @@ if (__name__ == "__main__"):
     def onDraw(fn):
         waitDraw.append(fn)
 
-    def draw_window():
+    def draw_window(events):
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
         game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
         game.draw_surface.blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
@@ -160,7 +160,7 @@ if (__name__ == "__main__"):
         game.draw_surface.blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
 
         for draw in draws:
-            draw(game)
+            draw(game, events)
 
         game.screen.fill(pygame.Color(255, 255, 255))
         game.screen.blit(game.draw_surface, (0, 0))
@@ -183,7 +183,8 @@ if (__name__ == "__main__"):
     while game.get('running') == True:
         # draw_window()
         # Handle events
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             pages.search.event(game, event)
             pages.gayming_button.event(game, event)
             pages.messages_button.event(game, event)
@@ -229,7 +230,7 @@ if (__name__ == "__main__"):
         # hovershift2 = initialize2
 
         # Draw the window
-        draw_window()
+        draw_window(events)
         # Cap the FPS
         game.get('clock').tick(game.get('FPS'))
     

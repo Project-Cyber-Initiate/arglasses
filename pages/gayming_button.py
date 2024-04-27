@@ -96,9 +96,9 @@ def ready():
                 set_game(None)
             games[game[0]] = game[1].main(close)
 
-def draw(game):
+def draw(game, events):
     if len(draw_params) > 0:
         for params in draw_params:
             params[0](*params[1])
     if (currentGame != None):
-        game.get('draw_surface').blit(currentGame(), (0, 0))
+        game.draw_surface.blit(currentGame(events), (0, 0))

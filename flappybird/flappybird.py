@@ -319,7 +319,7 @@ def main(close):
 
     # create new pygame surface without making a window
 
-    display_surface = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
+    display_surface = pygame.Surface((WIN_WIDTH, WIN_HEIGHT), pygame.SRCALPHA)
 
     clock = game.get('clock')
     score_font = pygame.font.SysFont(None, 32, bold=True)  # default font
@@ -336,7 +336,7 @@ def main(close):
     score = 0
     done = False
     paused = False
-    def runGame():
+    def runGame(events):
         nonlocal display_surface, clock, score_font, images, bird, pipes, frame_clock, score, done, paused
         if not (paused or frame_clock % msec_to_frames(PipePair.ADD_INTERVAL)):
             pp = PipePair(images['pipe-end'], images['pipe-body'])
@@ -373,7 +373,7 @@ def main(close):
             frame_clock += 1
             return display_surface
 
-        for e in game.pygame.event.get():
+        for e in events:
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
                 done = True
                 break
@@ -381,7 +381,6 @@ def main(close):
                 paused = not paused
             elif e.type == MOUSEBUTTONDOWN or (e.type == KEYUP and
                     e.key in (K_UP, K_RETURN, K_SPACE)):
-                print(e)
                 bird.msec_to_climb = Bird.CLIMB_DURATION
 
         if paused:
