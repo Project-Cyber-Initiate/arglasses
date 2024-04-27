@@ -64,7 +64,6 @@ try:
             image = ImageOps.invert(image)
             image = image.resize((128, 64))
             image = ImageOps.scale(image, 1.25)
-            image = ImageOps.mirror(image)
 
             drawbmp = image
             
