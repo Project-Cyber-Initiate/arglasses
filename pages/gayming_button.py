@@ -1,4 +1,4 @@
-from main import game, pygame
+from main import game, pygame, onDraw
 import os
 import sys
 import subprocess
@@ -96,7 +96,9 @@ def ready():
             def close():
                 games[name] = fn.main(close)
                 set_game(None)
-                _game.render += 1
+                def on():
+                    _game.render += 1
+                onDraw(on)
             games[game[0]] = game[1].main(close)
 
 def draw(game, events):
