@@ -94,6 +94,7 @@ def ready():
             def close():
                 games[name] = fn.main(close)
                 set_game(None)
+                game.render += 1
             games[game[0]] = game[1].main(close)
 
 def draw(game, events):
