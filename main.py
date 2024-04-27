@@ -162,8 +162,10 @@ if (__name__ == "__main__"):
         for draw in draws:
             draw(game, events)
 
+        overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.3))
+
         game.screen.fill(pygame.Color(255, 255, 255))
-        game.screen.blit(game.draw_surface, (0, 0))
+        game.screen.blit(overlay_surface, (0, 0))
 
         pygame.display.flip()
 
