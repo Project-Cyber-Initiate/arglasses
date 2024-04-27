@@ -43,6 +43,7 @@ try:
         Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
         if drawbmp == None:
             drawbmp = Image.open(picpath(currentPath))
+            drawbmp = ImageOps.mirror(drawbmp)
         Himage2.paste(drawbmp, (0,0))
         Himage2=Himage2.rotate(180) 	
         disp.ShowImage(disp.getbuffer(Himage2)) 
@@ -62,10 +63,13 @@ try:
             image = ImageEnhance.Contrast(image).enhance(100)
             image = ImageOps.invert(image)
             image = image.resize((128, 64))
-            #image = ImageOps.scale(image, 1.25)
+            image = ImageOps.scale(image, 1.25)
             image = ImageOps.mirror(image)
 
             drawbmp = image
+            
+            display()
+
             return ""
         except Exception as e:
             logging.error(e)
