@@ -61,7 +61,8 @@ try:
             image = ImageEnhance.Brightness(image).enhance(100)
             image = ImageEnhance.Contrast(image).enhance(100)
             image = ImageOps.invert(image)
-            image = image.resize((150, 70))
+            image = image.resize((128, 64))
+            image = ImageOps.scale(image, 1.1)
             image = ImageOps.mirror(image)
 
             drawbmp = image
