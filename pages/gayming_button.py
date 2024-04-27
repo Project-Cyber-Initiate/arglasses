@@ -98,10 +98,10 @@ def ready():
                 global on
                 games[name] = fn.main(close)
                 set_game(None)
-                def fn():
+                def f():
                     _game.render += 1
                 
-                on = fn
+                on = f
                 onDraw(on)
                 
             games[game[0]] = game[1].main(close)
