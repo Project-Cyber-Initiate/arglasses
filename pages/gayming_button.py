@@ -4,6 +4,8 @@ import sys
 import subprocess
 import flappybird.flappybird as flappybirdgame
 
+_game = game
+
 draw_params = []
 display_info = pygame.display.Info()
 # Setting the new dimensions
@@ -94,7 +96,7 @@ def ready():
             def close():
                 games[name] = fn.main(close)
                 set_game(None)
-                game.render += 1
+                _game.render += 1
             games[game[0]] = game[1].main(close)
 
 def draw(game, events):
