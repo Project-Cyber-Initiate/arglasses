@@ -120,8 +120,6 @@ def onDraw(fn = None):
     else:
         waitDraw.append(passImage)
 
-onDraw()
-
 _game = Game()
 
 cursor_pos = (0, 0)
@@ -150,6 +148,8 @@ def passImage():
 
     sendToChild("IMAGE")
     sendToChild(str(base64.b64encode(buffer)))
+
+onDraw()
 
 if (__name__ == "__main__"):
     import pages.search
