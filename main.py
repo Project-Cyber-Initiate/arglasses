@@ -120,6 +120,8 @@ def onDraw(fn = None):
     else:
         waitDraw.append(passImage)
 
+onDraw()
+
 _game = Game()
 
 cursor_pos = (0, 0)

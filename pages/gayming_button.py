@@ -100,6 +100,7 @@ def ready(render):
                 global currentGame
                 games[name] = fn.main(close)
                 set_game(None)
+                currentGame = None
 
                 render()
 
