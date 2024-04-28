@@ -99,8 +99,6 @@ try:
         else:
             currentPath = "main_page.bmp"
             pass
-
-        display()
     # time.sleep(3)    
     # disp.clear()
 
