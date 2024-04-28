@@ -156,9 +156,9 @@ if (__name__ == "__main__"):
 
     draws = [pages.search.draw, pages.gayming_button.draw, pages.messages_button.draw]
 
-    pages.search.ready(onDraw)
-    pages.gayming_button.ready(onDraw)
-    pages.messages_button.ready(onDraw)
+    pages.search.ready(onDraw(onDraw))
+    pages.gayming_button.ready(onDraw(onDraw))
+    pages.messages_button.ready(onDraw(onDraw))
 
     game.draw_surface.convert_alpha()
 
@@ -184,8 +184,8 @@ if (__name__ == "__main__"):
 
         for fn in waitDraw:
             fn()
+            waitDraw.remove(fn)
 
-        waitDraw.clear()
     # Main loop
 
     game.search = (pygame.transform.scale(pygame.image.load(os.path.join('png', 'search.png')), (game.get('rectw')*game.get('scalex')*.9, game.get('recth')*game.get('scaley'))))

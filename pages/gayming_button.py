@@ -97,6 +97,7 @@ def ready(render):
             fn = game[1]
             def close():
                 global on
+                global currentGame
                 games[name] = fn.main(close)
                 set_game(None)
                 currentGame = None
