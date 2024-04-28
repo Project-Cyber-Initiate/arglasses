@@ -101,10 +101,8 @@ def ready():
                 set_game(None)
 
                 time.sleep(1)
-                def f():
-                    passImage()
-                
-                on = f
+
+                on = True
 
             games[game[0]] = game[1].main(close)
 
@@ -116,5 +114,6 @@ def draw(game, events):
     if (currentGame != None):
         game.draw_surface.blit(currentGame(events), (0, 0))
     if (on != None):
-        on()
         on = None
+        return True
+    return False

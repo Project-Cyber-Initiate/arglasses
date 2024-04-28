@@ -172,7 +172,8 @@ if (__name__ == "__main__"):
         game.draw_surface.blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
 
         for draw in draws:
-            draw(game, events)
+            if draw(game, events):
+                onDraw()
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
 
