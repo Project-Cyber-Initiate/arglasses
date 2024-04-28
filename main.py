@@ -114,8 +114,11 @@ class Game:
         self.__dict__[key] = value
     
 waitDraw = []
-def onDraw(fn):
-    waitDraw.append(fn)
+def onDraw(fn = None):
+    if fn:
+        waitDraw.append(fn)
+    else:
+        waitDraw.append(passImage)
 
 _game = Game()
 
@@ -170,7 +173,7 @@ if (__name__ == "__main__"):
 
         for draw in draws:
             if draw(game, events):
-                onDraw(passImage)
+                onDraw(onDraw)
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
 
