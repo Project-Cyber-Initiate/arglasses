@@ -100,7 +100,7 @@ def ready():
                 games[name] = fn.main(close)
                 set_game(None)
 
-                time.sleep(0.2)
+                time.sleep(1)
                 _game.render += 1
 
             games[game[0]] = game[1].main(close)
