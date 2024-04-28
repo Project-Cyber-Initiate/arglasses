@@ -101,6 +101,8 @@ def ready(render):
                 games[name] = fn.main(close)
                 set_game(None)
                 currentGame = None
+                
+                on = True
 
                 render()
 
