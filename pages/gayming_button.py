@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess
 import flappybird.flappybird as flappybirdgame
+import time
 
 _game = game
 
@@ -99,8 +100,9 @@ def ready():
                 games[name] = fn.main(close)
                 set_game(None)
 
-                onDraw(onDraw)
-                
+                time.sleep(0.2)
+                _game.render += 1
+
             games[game[0]] = game[1].main(close)
 
 def draw(game, events):
