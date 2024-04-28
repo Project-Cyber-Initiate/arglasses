@@ -369,6 +369,7 @@ def main(close):
         
 
             close()
+            game.render += 1
 
             frame_clock += 1
             return display_surface
