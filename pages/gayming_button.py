@@ -99,8 +99,7 @@ def ready(render):
                 global on
                 games[name] = fn.main(close)
                 set_game(None)
-
-                time.sleep(1)
+                currentGame = None
 
                 on = True
 
