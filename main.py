@@ -133,6 +133,25 @@ for key, value in zip(
 
 game = _game
 
+sendToChild, readFromChild = run_oled_code()
+
+def passImage():
+    print('sending image')
+    imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
+    imgscreen = imgscreen.convert_alpha()
+    pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
+    
+    # Flip the image horizontally
+    imgscreen = pygame.transform.flip(imgscreen, True, False)
+    
+    # grayscale image
+    buffer = pygame.image.tobytes(imgscreen, "RGBA")
+
+    sendToChild("IMAGE")
+    sendToChild(str(base64.b64encode(buffer)))
+
+_passImage = passImage
+
 if (__name__ == "__main__"):
     import pages.search
     import pages.gayming_button
@@ -144,26 +163,7 @@ if (__name__ == "__main__"):
     pages.gayming_button.ready()
     pages.messages_button.ready()
 
-    sendToChild, readFromChild = run_oled_code()
-
     game.draw_surface.convert_alpha()
-
-    def passImage():
-        print('sending image')
-        imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
-        imgscreen = imgscreen.convert_alpha()
-        pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
-        
-        # Flip the image horizontally
-        imgscreen = pygame.transform.flip(imgscreen, True, False)
-        
-        # grayscale image
-        buffer = pygame.image.tobytes(imgscreen, "RGBA")
-
-        sendToChild("IMAGE")
-        sendToChild(str(base64.b64encode(buffer)))
-
-    _passImage = passImage
 
     def draw_window(events):
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
