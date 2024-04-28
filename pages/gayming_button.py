@@ -102,7 +102,7 @@ def ready():
 
                 time.sleep(0.2)
                 print('wat')
-                _game.render += 1
+                _game.render = _game.render + 1
 
             games[game[0]] = game[1].main(close)
 
