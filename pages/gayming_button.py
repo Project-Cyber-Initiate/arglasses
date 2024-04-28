@@ -104,7 +104,7 @@ def ready(render):
                 
                 on = True
 
-                #render()
+                render()
 
             games[game[0]] = game[1].main(close)
 
