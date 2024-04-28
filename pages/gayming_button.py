@@ -1,4 +1,4 @@
-from main import game, pygame, onDraw
+from main import game, pygame, passImage
 import os
 import sys
 import subprocess
@@ -103,6 +103,7 @@ def ready():
                 time.sleep(0.2)
                 print('wat')
                 _game.render = _game.render + 1
+                passImage()
 
             games[game[0]] = game[1].main(close)
 

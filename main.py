@@ -107,17 +107,16 @@ class Game:
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
                 if key == 'render':
                     print('r accept')
-                    onDraw()
+                    onDraw(passImage)
             except Exception as e:
                 print(e)
                 pass
         self.__dict__[key] = value
     
-_passImage = None
 waitDraw = []
 def onDraw(fn = None):
-    if _passImage and fn == None:
-        waitDraw.append(_passImage)
+    if passImage and not fn:
+        waitDraw.append(passImage)
     else:
         waitDraw.append(fn)
 
@@ -149,8 +148,6 @@ def passImage():
 
     sendToChild("IMAGE")
     sendToChild(str(base64.b64encode(buffer)))
-
-_passImage = passImage
 
 if (__name__ == "__main__"):
     import pages.search
