@@ -106,6 +106,7 @@ class Game:
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
                 if key == 'render':
+                    print('r accept')
                     onDraw()
             except Exception as e:
                 print(e)
@@ -120,7 +121,7 @@ def onDraw(fn = None):
     else:
         waitDraw.append(fn)
 
-game = Game()
+_game = Game()
 
 cursor_pos = (0, 0)
 
@@ -128,7 +129,9 @@ for key, value in zip(
     ['pygame', 'cursor_pos', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen', 'render', 'draw_surface'], 
     [pygame, cursor_pos, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)]
 ):
-    game.__setattr__(key, value)
+    _game.__setattr__(key, value)
+
+game = _game
 
 if (__name__ == "__main__"):
     import pages.search
@@ -146,6 +149,7 @@ if (__name__ == "__main__"):
     game.draw_surface.convert_alpha()
 
     def passImage():
+        print('sending image')
         imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
         imgscreen = imgscreen.convert_alpha()
         pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
