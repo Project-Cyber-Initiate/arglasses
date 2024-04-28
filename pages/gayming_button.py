@@ -87,7 +87,7 @@ on = None
 def oled ():
     run_oled_code2
 
-def ready():
+def ready(render):
     for game in {
         'flappybird': flappybirdgame,
         'basketrandom': None
@@ -103,6 +103,8 @@ def ready():
                 time.sleep(1)
 
                 on = True
+
+                render()
 
             games[game[0]] = game[1].main(close)
 

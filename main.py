@@ -156,9 +156,9 @@ if (__name__ == "__main__"):
 
     draws = [pages.search.draw, pages.gayming_button.draw, pages.messages_button.draw]
 
-    pages.search.ready()
-    pages.gayming_button.ready()
-    pages.messages_button.ready()
+    pages.search.ready(passImage)
+    pages.gayming_button.ready(passImage)
+    pages.messages_button.ready(passImage)
 
     game.draw_surface.convert_alpha()
 

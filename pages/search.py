@@ -53,7 +53,7 @@ def show(game, event, buttonsnum):
 def event(game, event):
     pass
 
-def ready():
+def ready(render):
     pass
 
 def hide():
