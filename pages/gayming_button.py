@@ -100,6 +100,8 @@ def ready():
                 games[name] = fn.main(close)
                 set_game(None)
 
+                time.sleep(1)
+
                 on = True
 
             games[game[0]] = game[1].main(close)
