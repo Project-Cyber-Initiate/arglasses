@@ -3,7 +3,7 @@ import os
 import sys
 import subprocess
 import flappybird.flappybird as flappybirdgame
-import time
+import asyncio
 
 _game = game
 
@@ -100,7 +100,8 @@ def ready():
                 games[name] = fn.main(close)
                 set_game(None)
 
-                time.sleep(1)
+                asyncio.wait(1)
+                print('wat')
                 _game.render += 1
 
             games[game[0]] = game[1].main(close)

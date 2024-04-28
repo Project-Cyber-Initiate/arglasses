@@ -106,7 +106,7 @@ class Game:
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
                 if key == 'render':
-                    onDraw(passImage)
+                    onDraw()
             except Exception as e:
                 print(e)
                 pass
@@ -116,7 +116,7 @@ _passImage = None
 waitDraw = []
 def onDraw(fn = None):
     if _passImage and fn == None:
-        waitDraw.append(passImage)
+        waitDraw.append(_passImage)
     else:
         waitDraw.append(fn)
 
