@@ -49,8 +49,6 @@ try:
         disp.ShowImage(disp.getbuffer(Himage2)) 
         drawbmp = None
 
-    display()
-
     def receiveImage():
         global drawbmp
         string = input()
