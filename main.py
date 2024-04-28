@@ -173,7 +173,7 @@ if (__name__ == "__main__"):
 
         for draw in draws:
             if draw(game, events):
-                onDraw(onDraw)
+                game.render += 1
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
 
