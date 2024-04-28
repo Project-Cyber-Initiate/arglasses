@@ -101,9 +101,10 @@ def ready():
                 set_game(None)
 
                 time.sleep(1)
-                print('wat')
-                #_game.render = _game.render + 1
-                passImage()
+                def f():
+                    passImage()
+                
+                on = f
 
             games[game[0]] = game[1].main(close)
 
