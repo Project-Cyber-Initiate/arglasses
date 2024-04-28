@@ -1,4 +1,4 @@
-from main import game, pygame, passImage
+from main import game, pygame
 import os
 import sys
 import subprocess
@@ -99,8 +99,6 @@ def ready():
                 global on
                 games[name] = fn.main(close)
                 set_game(None)
-
-                time.sleep(1)
 
                 on = True
 

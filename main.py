@@ -114,11 +114,8 @@ class Game:
         self.__dict__[key] = value
     
 waitDraw = []
-def onDraw(fn = None):
-    if passImage and not fn:
-        waitDraw.append(passImage)
-    else:
-        waitDraw.append(fn)
+def onDraw(fn):
+    waitDraw.append(fn)
 
 _game = Game()
 
@@ -131,23 +128,6 @@ for key, value in zip(
     _game.__setattr__(key, value)
 
 game = _game
-
-sendToChild, readFromChild = run_oled_code()
-
-def passImage():
-    print('sending image')
-    imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
-    imgscreen = imgscreen.convert_alpha()
-    pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
-    
-    # Flip the image horizontally
-    imgscreen = pygame.transform.flip(imgscreen, True, False)
-    
-    # grayscale image
-    buffer = pygame.image.tobytes(imgscreen, "RGBA")
-
-    sendToChild("IMAGE")
-    sendToChild(str(base64.b64encode(buffer)))
 
 if (__name__ == "__main__"):
     import pages.search
@@ -162,6 +142,23 @@ if (__name__ == "__main__"):
 
     game.draw_surface.convert_alpha()
 
+    sendToChild, readFromChild = run_oled_code()
+
+    def passImage():
+        print('sending image')
+        imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
+        imgscreen = imgscreen.convert_alpha()
+        pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
+        
+        # Flip the image horizontally
+        imgscreen = pygame.transform.flip(imgscreen, True, False)
+        
+        # grayscale image
+        buffer = pygame.image.tobytes(imgscreen, "RGBA")
+
+        sendToChild("IMAGE")
+        sendToChild(str(base64.b64encode(buffer)))
+
     def draw_window(events):
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
         game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
@@ -173,7 +170,7 @@ if (__name__ == "__main__"):
 
         for draw in draws:
             if draw(game, events):
-                onDraw()
+                onDraw(passImage)
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
 
