@@ -99,7 +99,7 @@ def ready():
                 games[name] = fn.main(close)
                 set_game(None)
 
-                onDraw()
+                onDraw(onDraw)
                 
             games[game[0]] = game[1].main(close)
 

@@ -48,7 +48,7 @@ try:
         Himage2=Himage2.rotate(180) 	
         disp.ShowImage(disp.getbuffer(Himage2)) 
         drawbmp = None
-    
+
     display()
 
     def receiveImage():

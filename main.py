@@ -90,6 +90,8 @@ class Game:
         if key in self.__dict__ and value != self.__dict__.get(key):
             try:
                 self.__dict__[key] = value
+                if key == 'cursor_pos':
+                    sendToChild(f"CURSOR.{value[0]},{value[1]}")
                 if key == 'currentscreen':
                     sendToChild(f"SCREEN.{value}")
                 if key in ['hover_background1', 'hover_background2', 'hover_background3']:
@@ -120,9 +122,11 @@ def onDraw(fn = None):
 
 game = Game()
 
+cursor_pos = (0, 0)
+
 for key, value in zip(
-    ['pygame', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen', 'render', 'draw_surface'], 
-    [pygame, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)]
+    ['pygame', 'cursor_pos', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen', 'render', 'draw_surface'], 
+    [pygame, cursor_pos, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)]
 ):
     game.__setattr__(key, value)
 
@@ -140,8 +144,6 @@ if (__name__ == "__main__"):
     sendToChild, readFromChild = run_oled_code()
 
     game.draw_surface.convert_alpha()
-
-    cursor_pos = (0, 0)
 
     def passImage():
         imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
@@ -170,8 +172,6 @@ if (__name__ == "__main__"):
 
         for draw in draws:
             draw(game, events)
-
-        pygame.draw.circle(game.draw_surface, (0, 0, 0), cursor_pos, 8)
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
 
