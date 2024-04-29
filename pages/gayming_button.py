@@ -69,7 +69,7 @@ def set_game(name):
 
 def event(game, event):
     global currentGame
-    if event.type == pygame.MOUSEBUTTONDOWN:
+    if event.type == pygame.MOUSEBUTTONDOWN and len(draw_params) > 0:
         if event.button == 1:
             if pygame.Rect(int(WIDTH * 0.32) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
                 print("Basketrandom")
@@ -114,7 +114,7 @@ def draw(game, events):
         for params in draw_params:
             params[0](*params[1])
     if (currentGame != None):
-        game.draw_surface.blit(currentGame(events), (0, 0))
+        game.draw_surface.blit(currentGame(events), (offsetX, offsetY))
     if (on != None):
         on = None
         return True

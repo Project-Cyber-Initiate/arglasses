@@ -1,4 +1,5 @@
-from main import game, pygame, offsetX, offsetY
+import pygame.ftfont
+from main import game, pygame, offsetX, offsetY, openai
 import os
 import sys
 import subprocess
@@ -50,7 +51,48 @@ def show(game, event, buttonsnum):
         print("Error:", e)
         pass
 
+current_input = ""
+
+ai = False
+
 def event(game, event):
+    global current_input, draw_params, ai
+    if event.type == pygame.KEYDOWN and len(draw_params) > 0:
+        if event.key == pygame.K_RSHIFT:
+            current_input = ""
+            ai = False
+            draw_params = []
+            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+        if event.key == pygame.K_RETURN and len(current_input) > 0:
+            ai = True
+            chat = openai.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": current_input}
+                ],
+                max_tokens=150,
+                stream=True
+            )
+            full_res = ""
+            for resp in chat:
+                if resp.choices[0].delta.content:
+                    full_res += resp.choices[0].delta.content
+                temp_params = []
+                # draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+                text = full_res
+                text = [text[i:i+30] for i in range(0, len(text), 30)]
+                for i in range(len(text)):
+                    text_surface = pygame.font.Font(None, 40).render(text[i], True, (0, 0, 0))
+                    temp_params.append((game.draw_surface.blit, (text_surface, (offsetX + 400, offsetY + 120 + (i * 30)))))
+                draw_params = temp_params
+            current_input = ""
+            ai = False
+        elif event.key == pygame.K_BACKSPACE: 
+            current_input = current_input[:-1] 
+        else: 
+            current_input += event.unicode
     pass
 
 def ready(render):
@@ -64,6 +106,12 @@ def oled ():
     run_oled_code2
 
 def draw(game, events):
+    global ai
     if len(draw_params) > 0:
         for params in draw_params:
             params[0](*params[1])
+
+        if not ai:
+            text_surface = pygame.font.Font(None, 32).render(current_input, True, (0, 0, 0)) 
+
+            game.draw_surface.blit(text_surface, (offsetX + 560, offsetY + 240)) 

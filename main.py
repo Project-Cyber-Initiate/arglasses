@@ -7,13 +7,22 @@ from pygame.locals import *
 from PIL import Image, ImageFilter
 import base64
 import time
+from openai import OpenAI
+from threading import Thread
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+os.environ["OPENAI_API_KEY"] = os.environ['OPENAI_KEY']
+
+openai = OpenAI()
 
 # import button
 # Initialize Pygame
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,0)
 pygame.init()
 
-import click
 import button
 import subprocess
 
@@ -125,8 +134,8 @@ _game = Game()
 cursor_pos = (0, 0)
 
 for key, value in zip(
-    ['pygame', 'cursor_pos', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen', 'render', 'draw_surface'], 
-    [pygame, cursor_pos, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((display_info.current_w, display_info.current_h), pygame.SRCALPHA)]
+    ['pygame', 'cursor_pos', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen', 'render', 'draw_surface'], 
+    [pygame, cursor_pos, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((display_info.current_w, display_info.current_h), pygame.SRCALPHA)]
 ):
     _game.__setattr__(key, value)
 
@@ -204,9 +213,9 @@ if (__name__ == "__main__"):
         # Handle events
         events = pygame.event.get()
         for event in events:
-            pages.search.event(game, event)
-            pages.gayming_button.event(game, event)
-            pages.messages_button.event(game, event)
+            Thread(target=pages.search.event, args=(game, event)).start()
+            Thread(target=pages.gayming_button.event, args=(game, event)).start()
+            Thread(target=pages.messages_button.event, args=(game, event)).start()
 
             if event.type == pygame.QUIT:
                 game.running = False
