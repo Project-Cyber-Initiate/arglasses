@@ -2,7 +2,7 @@ import pygame
 
 mouse_x, mouse_y = pygame.mouse.get_pos()
 
-def click (mouse_x, mouse_y, rectx, recty, rectw, recth):
+def click (mouse_x, mouse_y, rectx, recty, rectw, recth, offsetX, offsetY):
 
     if rectx*.3 <= mouse_x <= rectx*.3 + rectw and recty*.2 <= mouse_y <= recty*.2 + recth:
         if pygame.mouse.get_pressed()[0]:

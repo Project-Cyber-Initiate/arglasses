@@ -10,7 +10,7 @@ import time
 
 # import button
 # Initialize Pygame
-os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100,100)
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,0)
 pygame.init()
 
 import click
@@ -37,9 +37,10 @@ initialize2=0
 initialize3=0
 cap = None#(cv2.VideoCapture(0))
 
+bgscreen = subprocess.Popen(["python", "bg.py"], stdin=subprocess.PIPE, stdout=sys.stdout, stderr=sys.stderr, text=True)
 
 # Create the screen
-screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SRCALPHA)
+screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN + pygame.SRCALPHA)
 
 screen.set_colorkey((0, 0, 0))
 pygame.display.set_caption("arglasses")
@@ -106,7 +107,6 @@ class Game:
                     game.messages = pygame.transform.scale(pygame.image.load(os.path.join('png', 'messages.png')), (game.get('rectw')*game.get('scalex2')*.9, game.get('recth')*game.get('scaley2')))
                     game.messages_background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'texts_background.png')), (game.get('rectw')*game.get('scalex2')*game.get('hover_background3')*2, game.get('recth')*game.get('scaley2')*1.2))
                 if key == 'render':
-                    print('r accept')
                     onDraw(passImage)
             except Exception as e:
                 print(e)
@@ -132,10 +132,7 @@ for key, value in zip(
 
 game = _game
 
-sendToChild, readFromChild = run_oled_code()
-
 def passImage():
-    print('sending image')
     imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
     imgscreen = imgscreen.convert_alpha()
     pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
@@ -156,6 +153,8 @@ if (__name__ == "__main__"):
     import pages.gayming_button
     import pages.messages_button
 
+    sendToChild, readFromChild = run_oled_code()
+
     draws = [pages.search.draw, pages.gayming_button.draw, pages.messages_button.draw]
 
     pages.search.ready(onDraw)
@@ -164,14 +163,17 @@ if (__name__ == "__main__"):
 
     game.draw_surface.convert_alpha()
 
+    offsetX = 500
+    offsetY = 100
+
     def draw_window(events):
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
-        game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]-10))
-        game.draw_surface.blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0], game.get('recty') * .2 + game.get('hovershift1')[1]))
-        game.draw_surface.blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0], game.get('recty') + game.get('hovershift2')[1]-10))
-        game.draw_surface.blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + 10, game.get('recty') + game.get('hovershift2')[1]+4))
-        game.draw_surface.blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]-15))
-        game.draw_surface.blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0], game.get('recty')*1.8 + game.get('hovershift3')[1]))
+        game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0] + offsetX, game.get('recty') * .2 + game.get('hovershift1')[1]-10 + offsetY))
+        game.draw_surface.blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0] + offsetX, game.get('recty') * .2 + game.get('hovershift1')[1] + offsetY))
+        game.draw_surface.blit(game.get('gayming_background'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + offsetX, game.get('recty') + game.get('hovershift2')[1]-10 + offsetY))
+        game.draw_surface.blit(game.get('gayming'), (game.get('rectx') * .3 + game.get('hovershift2')[0] + 10 + offsetX, game.get('recty') + game.get('hovershift2')[1]+4 + offsetY))
+        game.draw_surface.blit(game.get('messages_background'), (game.get('rectx') * .3 + game.get('hovershift3')[0] + offsetX, game.get('recty')*1.8 + game.get('hovershift3')[1]-15 + offsetY))
+        game.draw_surface.blit(game.get('messages'), (game.get('rectx') * .3 + game.get('hovershift3')[0] + offsetX, game.get('recty')*1.8 + game.get('hovershift3')[1] + offsetY))
 
         for draw in draws:
             if draw(game, events):
@@ -210,7 +212,9 @@ if (__name__ == "__main__"):
                 game.running = False
             elif event.type == pygame.MOUSEMOTION:
                 cursor_pos = event.pos
-                game.scalex, game.scaley, game.scalex1, game.scaley1, game.scalex2, game.scaley2, game.initialize1, game.initialize2, game.initialize3, game.hover_background1, game.hover_background2, game.hover_background3 = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth')))
+                game.scalex, game.scaley, game.scalex1, game.scaley1, game.scalex2, game.scaley2, game.initialize1, game.initialize2, game.initialize3, game.hover_background1, game.hover_background2, game.hover_background3 = button.button((event.pos, game.get('rectx'), game.get('recty'), game.get('rectw'), game.get('recth'), offsetX, offsetY))
+                if cursor_pos == (0, 0):
+                    exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game.get('initialize1'):
                     searchdown = 1

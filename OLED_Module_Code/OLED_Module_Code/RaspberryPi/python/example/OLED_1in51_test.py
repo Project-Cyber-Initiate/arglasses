@@ -22,8 +22,6 @@ currentPath = "main_page.bmp"
 def picpath(path):
     return os.path.join(picdir, path)
 
-print("listening for inputs nig")
-
 drawbmp = None
 
 try:
@@ -84,8 +82,6 @@ try:
             continue
 
         screen = match.group(1)
-
-        print(screen)
 
         if screen == "search":
             currentPath = "search_oled.bmp"
