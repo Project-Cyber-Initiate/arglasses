@@ -37,10 +37,10 @@ initialize2=0
 initialize3=0
 cap = None#(cv2.VideoCapture(0))
 
-bgscreen = subprocess.Popen(["python", "bg.py"], stdin=subprocess.PIPE, stdout=sys.stdout, stderr=sys.stderr, text=True)
+# bgscreen = subprocess.Popen(["python", "bg.py"], stdin=subprocess.PIPE, stdout=sys.stdout, stderr=sys.stderr, text=True)
 
 # Create the screen
-screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN + pygame.SRCALPHA)
+screen = pygame.display.set_mode((display_info.current_w, display_info.current_h), pygame.FULLSCREEN + pygame.SRCALPHA)
 
 screen.set_colorkey((0, 0, 0))
 pygame.display.set_caption("arglasses")
@@ -126,7 +126,7 @@ cursor_pos = (0, 0)
 
 for key, value in zip(
     ['pygame', 'cursor_pos', 'click', 'clock', 'display_info', 'WIDTH', 'HEIGHT', 'FPS', 'scalex', 'scaley', 'scalex1', 'scaley1', 'scalex2', 'scaley2', 'scx', 'scy', 'initialize1', 'initialize2', 'initialize3', 'cap', 'screen', 'WHITE', 'RED', 'rectw', 'recth', 'recty', 'rectx', 'rectx_2', 'hovershift1', 'hovershift2', 'hovershift3', 'hover_background1', 'hover_background2', 'hover_background3', 'running', 'currentscreen', 'render', 'draw_surface'], 
-    [pygame, cursor_pos, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)]
+    [pygame, cursor_pos, click, pygame.time.Clock(), display_info, WIDTH, HEIGHT, FPS, scalex, scaley, scalex1, scaley1, scalex2, scaley2, scx, scy, initialize1, initialize2, initialize3, cap, screen, WHITE, RED, rectw, recth, recty, rectx, rectx_2, hovershift1, hovershift2, hovershift3, hover_background1, hover_background2, hover_background3, True, 'none', 0, pygame.Surface((display_info.current_w, display_info.current_h), pygame.SRCALPHA)]
 ):
     _game.__setattr__(key, value)
 
@@ -148,6 +148,9 @@ def passImage():
 
 onDraw()
 
+offsetX = 500
+offsetY = 300
+
 if (__name__ == "__main__"):
     import pages.search
     import pages.gayming_button
@@ -163,9 +166,6 @@ if (__name__ == "__main__"):
 
     game.draw_surface.convert_alpha()
 
-    offsetX = 500
-    offsetY = 100
-
     def draw_window(events):
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
         game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0] + offsetX, game.get('recty') * .2 + game.get('hovershift1')[1]-10 + offsetY))
@@ -179,7 +179,7 @@ if (__name__ == "__main__"):
             if draw(game, events):
                 game.render += 1
 
-        overlay_surface = pygame.transform.scale(game.draw_surface, (WIDTH, HEIGHT / 1.6))
+        overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w, display_info.current_h / 1.6))
 
         game.screen.fill(pygame.Color(255, 255, 255))
         game.screen.blit(overlay_surface, (0, 0))

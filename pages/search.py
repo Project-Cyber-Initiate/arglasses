@@ -1,4 +1,4 @@
-from main import game, pygame
+from main import game, pygame, offsetX, offsetY
 import os
 import sys
 import subprocess
@@ -18,9 +18,9 @@ def is_even(number):
 
 # Adjusted sizes based on proportions of WIDTH and HEIGHT
 search_surface = pygame.transform.scale(pygame.image.load(os.path.join('png', 'google search.webp')),
-                                       (int(WIDTH * 0.339), int(HEIGHT * 0.357)))
+                                       (int(WIDTH * 0.32), int(HEIGHT * 0.345)))
 background = pygame.transform.scale(pygame.image.load(os.path.join('png', 'justbackground.png')),
-                                    (int(WIDTH * 0.678), int(HEIGHT * 0.357)))
+                                    (int(WIDTH * 0.65), int(HEIGHT * 0.345)))
 
 # Function to execute OLED display code
 def run_oled_code():
@@ -41,8 +41,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211), int(HEIGHT * 0.329)))))
-            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381), int(HEIGHT * 0.329)))))
+            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
             # Run OLED display code when button is clicked
             run_oled_code()
     except Exception as e:

@@ -1,4 +1,4 @@
-from main import game, pygame
+from main import game, pygame, offsetX, offsetY
 import os
 import sys
 import subprocess
@@ -36,9 +36,9 @@ def is_even(number):
 
 # Adjusted sizes based on proportions of WIDTH and HEIGHT
 basketrandom = pygame.transform.scale(pygame.image.load(os.path.join('png', 'basketrandom_logo.jpg')),
-                                      (int(WIDTH * 0.169), int(HEIGHT * 0.286)))
+                                      (int(WIDTH * 0.13), int(HEIGHT * 0.25)))
 flappybird = pygame.transform.scale(pygame.image.load(os.path.join('png', 'flappybird_logo.png')),
-                                     (int(WIDTH * 0.169), int(HEIGHT * 0.286)))
+                                     (int(WIDTH * 0.13), int(HEIGHT * 0.25)))
 
 def show(game, event, buttonsnum):
     global clicks, draw_params
@@ -53,8 +53,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.draw_surface.blit, (basketrandom, (int(WIDTH * 0.381), int(HEIGHT * 0.357)))))
-            draw_params.append((game.draw_surface.blit, (flappybird, (int(WIDTH * 0.678), int(HEIGHT * 0.357)))))
+            draw_params.append((game.draw_surface.blit, (basketrandom, (int(WIDTH * 0.32) + offsetX, int(HEIGHT * 0.275) + offsetY))))
+            draw_params.append((game.draw_surface.blit, (flappybird, (int(WIDTH * 0.5) + offsetX, int(HEIGHT * 0.275) + offsetY))))
             run_oled_code()
     except Exception as e:
         print("Error:", e)
@@ -71,9 +71,9 @@ def event(game, event):
     global currentGame
     if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
-            if pygame.Rect(int(WIDTH * 0.381), int(HEIGHT * 0.357), int(WIDTH * 0.169), int(HEIGHT * 0.286)).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.32) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
                 print("Basketrandom")
-            if pygame.Rect(int(WIDTH * 0.678), int(HEIGHT * 0.357), int(WIDTH * 0.169), int(HEIGHT * 0.286)).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.5) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
                 set_game("flappybird")
     pass
 
