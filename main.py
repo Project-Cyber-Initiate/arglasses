@@ -157,8 +157,8 @@ def passImage():
 
 onDraw()
 
-offsetX = 260
-offsetY = 140
+offsetX = 300
+offsetY = 180
 
 if (__name__ == "__main__"):
     import pages.search
@@ -188,7 +188,7 @@ if (__name__ == "__main__"):
             if draw(game, events):
                 game.render += 1
 
-        overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.8))
+        overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.7))
         overlay_surface = pygame.transform.flip(overlay_surface, False, True)
 
         game.screen.fill(pygame.Color(255, 255, 255))
