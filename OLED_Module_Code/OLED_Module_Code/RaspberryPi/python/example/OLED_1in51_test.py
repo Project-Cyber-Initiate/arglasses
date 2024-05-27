@@ -38,14 +38,16 @@ try:
     def display():
         global drawbmp
         logging.info ("***draw image")
-        Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
+        Himage2 = Image.new('1', (disp.width, disp.height), 255)
+        Himage3 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
         if drawbmp == None:
             drawbmp = Image.open(picpath(currentPath))
             drawbmp = ImageOps.mirror(drawbmp)
         Himage2.paste(drawbmp, (0, 0))
         Himage2=Himage2.transpose(Image.FLIP_TOP_BOTTOM)
         Himage2=Himage2.rotate(180) 	
-        disp.ShowImage(disp.getbuffer(Himage2)) 
+        Himage3.paste(Himage2, (0, 50))
+        disp.ShowImage(disp.getbuffer(Himage3)) 
         drawbmp = None
 
     def receiveImage():
