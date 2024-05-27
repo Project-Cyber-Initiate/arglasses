@@ -157,8 +157,8 @@ def passImage():
 
 onDraw()
 
-offsetX = 255
-offsetY = 200
+offsetX = 260
+offsetY = 140
 
 if (__name__ == "__main__"):
     import pages.search
