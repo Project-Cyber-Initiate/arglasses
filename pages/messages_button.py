@@ -1,4 +1,4 @@
-from main import game, pygame, offsetX, offsetY
+from main_yt import game, pygame, offsetX, offsetY
 import os
 import subprocess
 import sys
@@ -41,8 +41,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.042) + offsetX, int(HEIGHT * 0.2) + offsetY / 1.6))))
-            draw_params.append((game.draw_surface.blit, (messages, (int(WIDTH * 0.169) + offsetX, int(HEIGHT * 0.2) + offsetY / 1.6))))
+            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.042) + 100 + offsetX, int(HEIGHT * 0.2) + offsetY / 1.6))))
+            draw_params.append((game.draw_surface.blit, (messages, (int(WIDTH * 0.169) + 100 + offsetX, int(HEIGHT * 0.2) + offsetY / 1.6))))
             run_oled_code()
     except Exception as e:
         print("Drawing Error:", e)

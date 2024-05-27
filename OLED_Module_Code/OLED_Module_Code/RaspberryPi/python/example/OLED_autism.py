@@ -3,7 +3,6 @@
 
 import sys
 import os
-import base64
 import re
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -15,6 +14,7 @@ import time
 import traceback
 #from waveshare_OLED import OLED_1in51
 from PIL import Image,ImageDraw,ImageFont,ImageOps,ImageEnhance
+import base64
 logging.basicConfig(level=logging.DEBUG)
 
 currentPath = "main_page.bmp"
@@ -22,35 +22,35 @@ currentPath = "main_page.bmp"
 def picpath(path):
     return os.path.join(picdir, path)
 
-print("listening for inputs nig")
-
 drawbmp = None
 
 try:
-    '''disp = OLED_1in51.OLED_1in51()
+    #disp = OLED_1in51.OLED_1in51()
 
     logging.info("\r1.51inch OLED ")
     # Initialize library.
-    disp.Init()
+    #disp.Init()
     # Clear display.
     logging.info("clear display")
-    disp.clear()'''
+    #disp.clear()
 
     # Create blank image for drawing   
     def display():
         global drawbmp
         logging.info ("***draw image")
-        Himage2 = Image.new('1', (disp.width, disp.height), 255)  # 255: clear the frame
+        Himage2 = Image.new('1', (128, 64), 255)  # 255: clear the frame
         if drawbmp == None:
             drawbmp = Image.open(picpath(currentPath))
+            drawbmp = ImageOps.mirror(drawbmp)
         Himage2.paste(drawbmp, (0,0))
-        Himage2=Himage2.rotate(180) 	
+        # Himage2=Himage2.rotate(180) 	
+        
+        return Himage2.save('oled.bmp')
         disp.ShowImage(disp.getbuffer(Himage2)) 
         drawbmp = None
-    
-    #display()
 
     def receiveImage():
+        global drawbmp
         string = input()
         try:
             data = base64.b64decode(string)
@@ -61,8 +61,12 @@ try:
             image = ImageEnhance.Contrast(image).enhance(100)
             image = ImageOps.invert(image)
             image = image.resize((128, 64))
+            image = ImageOps.scale(image, 1)
 
             drawbmp = image
+            
+            display()
+
             return ""
         except Exception as e:
             logging.error(e)
@@ -81,8 +85,6 @@ try:
 
         screen = match.group(1)
 
-        print(screen)
-
         if screen == "search":
             currentPath = "search_oled.bmp"
             pass
@@ -95,8 +97,6 @@ try:
         else:
             currentPath = "main_page.bmp"
             pass
-
-        #display()
     # time.sleep(3)    
     # disp.clear()
 

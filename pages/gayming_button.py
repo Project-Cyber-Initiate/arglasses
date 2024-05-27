@@ -1,4 +1,4 @@
-from main import game, pygame, offsetX, offsetY
+from main_yt import game, pygame, offsetX, offsetY
 import os
 import sys
 import subprocess
@@ -53,8 +53,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.draw_surface.blit, (basketrandom, (int(WIDTH * 0.32) + offsetX, int(HEIGHT * 0.275) + offsetY))))
-            draw_params.append((game.draw_surface.blit, (flappybird, (int(WIDTH * 0.5) + offsetX, int(HEIGHT * 0.275) + offsetY))))
+            draw_params.append((game.draw_surface.blit, (basketrandom, (int(WIDTH * 0.4) + offsetX, int(HEIGHT * 0.35) + offsetY))))
+            draw_params.append((game.draw_surface.blit, (flappybird, (int(WIDTH * 0.6) + offsetX, int(HEIGHT * 0.35) + offsetY))))
             run_oled_code()
     except Exception as e:
         print("Error:", e)
@@ -71,9 +71,9 @@ def event(game, event):
     global currentGame
     if event.type == pygame.MOUSEBUTTONDOWN and len(draw_params) > 0:
         if event.button == 1:
-            if pygame.Rect(int(WIDTH * 0.32) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.4) + offsetX, (int(HEIGHT * 0.35) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
                 print("Basketrandom")
-            if pygame.Rect(int(WIDTH * 0.5) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.6) + offsetX, (int(HEIGHT * 0.35) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
                 set_game("flappybird")
     pass
 
