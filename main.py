@@ -9,6 +9,7 @@ import base64
 import time
 from openai import OpenAI
 from threading import Thread
+import yt, math
 
 from dotenv import load_dotenv
 
@@ -22,6 +23,7 @@ openai = OpenAI()
 # Initialize Pygame
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,0)
 pygame.init()
+pygame.mixer.init()
 
 import button
 import subprocess
@@ -177,7 +179,39 @@ if (__name__ == "__main__"):
 
     game.draw_surface.convert_alpha()
 
+    # https://www.youtube.com/watch?v=dWXuz95uBQo spanish or vanish
+    # https://www.youtube.com/watch?v=9bZkp7q19f0 psy gangnam style
+    # https://www.youtube.com/watch?v=9HboD7iudlc weight of living I
+    # https://www.youtube.com/watch?v=ge97gbe9JD4 pompeii
+    # https://www.youtube.com/watch?v=5DoB32FZoO4 schlatt my way
+    # https://www.youtube.com/watch?v=noCr2-VmHXI fire national anthem
+    # https://www.youtube.com/watch?v=S-SDBEPBiTM joe biden
+    # https://www.youtube.com/watch?v=xuCn8ux2gbs history of the world
+    yt.clearHistory()
+    video = yt.download('https://www.youtube.com/watch?v=xuCn8ux2gbs')
+    frames_thread = Thread(target=yt.splitFrames, args=(video,))
+    frames_thread.start()
+
+    audio_thread = Thread(target=yt.getAudio, args=('./yt-video.webm',))
+    audio_thread.start()
+    #audio_length = 0
+
+    #channel = pygame.mixer.Channel(0)
+    #pygame.mixer.music.load('yt-audio.mp3')
+    #channel.pause()
+
+    frames_thread.join()
+    audio_thread.join()
+
+    pygame.mixer.music.load('./yt-audio.mp3')
+    audio_length = pygame.mixer.Sound('yt-audio.mp3').get_length() * 1000
+
+    frames = yt.getFrames()
+
+    currentFrame = 0
+
     def draw_window(events):
+        global currentFrame, audio_length
         game.draw_surface.fill(pygame.Color(0, 0, 0, 0))
         game.draw_surface.blit(game.get('search_background'), (game.get('rectx') * .3 + game.get('hovershift1')[0] + offsetX, game.get('recty') * .2 + game.get('hovershift1')[1]-10 + offsetY))
         game.draw_surface.blit(game.get('search'), (game.get('rectx') * .3 + game.get('hovershift1')[0] + offsetX, game.get('recty') * .2 + game.get('hovershift1')[1] + offsetY))
@@ -189,6 +223,15 @@ if (__name__ == "__main__"):
         for draw in draws:
             if draw(game, events):
                 game.render += 1
+
+        if pygame.mixer.music.get_pos() == -1:
+            pygame.mixer.music.play(0)
+
+        f = frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))]
+        img = pygame.image.frombuffer(f.tobytes(), f.size, f.mode)
+        img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT), int(HEIGHT)))
+
+        game.draw_surface.blit(img, (0, 0))
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.7))
         overlay_surface = pygame.transform.flip(overlay_surface, False, True)
