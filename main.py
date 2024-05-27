@@ -144,7 +144,9 @@ game = _game
 def passImage():
     imgscreen = pygame.Surface((256, 128), pygame.SRCALPHA, 32)
     imgscreen = imgscreen.convert_alpha()
-    pygame.transform.scale(game.draw_surface, (256, 128), imgscreen)
+    surf_1 = pygame.transform.scale(game.draw_surface, (256, 128))
+
+    imgscreen.blit(surf_1, (-50, 0))
     
     # Flip the image horizontally
     imgscreen = pygame.transform.flip(imgscreen, True, False)
@@ -157,8 +159,8 @@ def passImage():
 
 onDraw()
 
-offsetX = 0
-offsetY = 0
+offsetX = 150
+offsetY = 20
 
 if (__name__ == "__main__"):
     import pages.search
