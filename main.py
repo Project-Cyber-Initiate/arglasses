@@ -235,10 +235,11 @@ if (__name__ == "__main__"):
             if pygame.mixer.music.get_pos() == -1:
                 pygame.mixer.music.play(0)
 
-            f = frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))]
+            f = Image.open(frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))])
             img = pygame.image.frombuffer(f.tobytes(), f.size, f.mode)
             img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT) * 0.8, int(HEIGHT) * 0.8))
-            
+            f.close()
+
             game.draw_surface.blit(img, (offsetX, offsetY))
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.7))

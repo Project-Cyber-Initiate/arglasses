@@ -109,4 +109,4 @@ def splitFrames(video_path):
 
 def getFrames():
     output_directory = 'frames/'
-    return [Image.open(os.path.join(output_directory, frame)) for frame in sorted(os.listdir(output_directory))]
+    return [(os.path.join(output_directory, frame)) for frame in sorted(os.listdir(output_directory))]
