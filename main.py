@@ -159,7 +159,7 @@ def passImage():
 
 onDraw()
 
-offsetX = 150
+offsetX = 300
 offsetY = 20
 
 if (__name__ == "__main__"):
