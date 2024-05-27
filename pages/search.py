@@ -42,8 +42,8 @@ def show(game, event, buttonsnum):
             draw_params = []
             game.set('currentscreen', 'none')
         else:
-            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
-            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1))))
+            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381) + offsetX, int(HEIGHT * 0.35) + offsetY / 1))))
             # Run OLED display code when button is clicked
             run_oled_code()
     except Exception as e:
@@ -62,8 +62,8 @@ def event(game, event):
             current_input = ""
             ai = False
             draw_params = []
-            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
-            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+            draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1))))
+            draw_params.append((game.draw_surface.blit, (search_surface, (int(WIDTH * 0.381) + offsetX, int(HEIGHT * 0.35) + offsetY / 1))))
         if event.key == pygame.K_RETURN and len(current_input) > 0:
             ai = True
             chat = openai.chat.completions.create(
@@ -80,7 +80,7 @@ def event(game, event):
                 if resp.choices[0].delta.content:
                     full_res += resp.choices[0].delta.content
                 temp_params = []
-                # draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1.6))))
+                # draw_params.append((game.draw_surface.blit, (background, (int(WIDTH * 0.211) + offsetX, int(HEIGHT * 0.35) + offsetY / 1))))
                 text = full_res
                 text = [text[i:i+30] for i in range(0, len(text), 30)]
                 for i in range(len(text)):

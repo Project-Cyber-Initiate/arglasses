@@ -8,6 +8,7 @@ import time
 _game = game
 
 draw_params = []
+
 display_info = pygame.display.Info()
 # Setting the new dimensions
 
@@ -71,9 +72,9 @@ def event(game, event):
     global currentGame
     if event.type == pygame.MOUSEBUTTONDOWN and len(draw_params) > 0:
         if event.button == 1:
-            if pygame.Rect(int(WIDTH * 0.32) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.32) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1).collidepoint(event.pos):
                 print("Basketrandom")
-            if pygame.Rect(int(WIDTH * 0.5) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1.6, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1.6).collidepoint(event.pos):
+            if pygame.Rect(int(WIDTH * 0.5) + offsetX, (int(HEIGHT * 0.3) + offsetY) / 1, int(WIDTH * 0.169), int(HEIGHT * 0.275)/1).collidepoint(event.pos):
                 set_game("flappybird")
     pass
 

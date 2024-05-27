@@ -5,7 +5,7 @@ scy = 0.85
 def button(tup):
     ((mouse_x, mouse_y), rectx, recty, rectw, recth, offsetX, offsetY) = tup
 
-    if rectx*.3 <= mouse_x-offsetX <= rectx*.3 + rectw and (recty*.2/1.6) <= (mouse_y-offsetY/1.6) <= recty*.2/1.6 + recth/1.6:
+    if rectx*.3 <= mouse_x-offsetX <= rectx*.3 + rectw and (recty*.2/1) <= (mouse_y-offsetY/1) <= recty*.2/1 + recth/1:
         # print("Mouse is over the rectangle!")
         return (
             scx, # scalex
@@ -22,7 +22,7 @@ def button(tup):
             0
         )
         
-    elif rectx*.3 <= mouse_x-offsetX <= rectx*.3 + rectw and (recty/1.6) <= (mouse_y-offsetY/1.6) <= recty/1.6 + (recth)/1.6:
+    elif rectx*.3 <= mouse_x-offsetX <= rectx*.3 + rectw and (recty/1) <= (mouse_y-offsetY/1) <= recty/1 + (recth)/1:
         # print("Mouse is over rectangle 2")
         return (
             1, # scalex
@@ -38,7 +38,7 @@ def button(tup):
             1,
             0
         )
-    elif rectx*.3 <= mouse_x-offsetX <= rectx*.3 + rectw and (recty*1.8/1.6) <= (mouse_y-offsetY/1.6) <= recty*1.8/1.6 + (recth)/1.6:
+    elif rectx*.3 <= mouse_x-offsetX <= rectx*.3 + rectw and (recty*1.8/1) <= (mouse_y-offsetY/1) <= recty*1.8/1 + (recth)/1:
         # print("Mouse is over rectangle 3")
         return (
             1, # scalex
