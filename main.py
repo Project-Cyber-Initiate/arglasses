@@ -187,28 +187,33 @@ if (__name__ == "__main__"):
     # https://www.youtube.com/watch?v=noCr2-VmHXI fire national anthem
     # https://www.youtube.com/watch?v=S-SDBEPBiTM joe biden
     # https://www.youtube.com/watch?v=xuCn8ux2gbs history of the world
-    yt.clearHistory()
-    video = yt.download('https://www.youtube.com/watch?v=S-SDBEPBiTM')
-    frames_thread = Thread(target=yt.splitFrames, args=(video,))
-    frames_thread.start()
-
-    audio_thread = Thread(target=yt.getAudio, args=('./yt-video.webm',))
-    audio_thread.start()
-    #audio_length = 0
-
-    #channel = pygame.mixer.Channel(0)
-    #pygame.mixer.music.load('yt-audio.mp3')
-    #channel.pause()
-
-    frames_thread.join()
-    audio_thread.join()
-
-    pygame.mixer.music.load('./yt-audio.mp3')
-    audio_length = pygame.mixer.Sound('yt-audio.mp3').get_length() * 1000
-
-    frames = yt.getFrames()
-
+    frames = []
+    audio_length = 0
     currentFrame = 0
+    video_playing = False
+
+    def load_video():
+        global frames, audio_length
+        yt.clearHistory()
+        video = yt.download('https://www.youtube.com/watch?v=S-SDBEPBiTM')
+        frames_thread = Thread(target=yt.splitFrames, args=(video,))
+        frames_thread.start()
+
+        audio_thread = Thread(target=yt.getAudio, args=('./yt-video.webm',))
+        audio_thread.start()
+        #audio_length = 0
+
+        #channel = pygame.mixer.Channel(0)
+        #pygame.mixer.music.load('yt-audio.mp3')
+        #channel.pause()
+
+        frames_thread.join()
+        audio_thread.join()
+
+        pygame.mixer.music.load('./yt-audio.mp3')
+        audio_length = pygame.mixer.Sound('yt-audio.mp3').get_length() * 1000
+
+        frames = yt.getFrames()
 
     def draw_window(events):
         global currentFrame, audio_length
@@ -224,14 +229,17 @@ if (__name__ == "__main__"):
             if draw(game, events):
                 game.render += 1
 
-        if pygame.mixer.music.get_pos() == -1:
-            pygame.mixer.music.play(0)
+        if video_playing:
+            if len(frames) == 0:
+                load_video()
+            if pygame.mixer.music.get_pos() == -1:
+                pygame.mixer.music.play(0)
 
-        f = frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))]
-        img = pygame.image.frombuffer(f.tobytes(), f.size, f.mode)
-        img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT), int(HEIGHT)))
+            f = frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))]
+            img = pygame.image.frombuffer(f.tobytes(), f.size, f.mode)
+            img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT), int(HEIGHT)))
 
-        game.draw_surface.blit(img, (0, 0))
+            game.draw_surface.blit(img, (0, 0))
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.7))
         overlay_surface = pygame.transform.flip(overlay_surface, False, True)
@@ -289,6 +297,7 @@ if (__name__ == "__main__"):
                     pages.messages_button.show(game, event, buttonsnum)
                     pages.search.hide()
                     pages.gayming_button.hide()
+                    video_playing = True
                 game.render += 1
             
         # print(game.get('initialize2'))
