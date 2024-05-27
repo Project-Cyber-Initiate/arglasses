@@ -146,7 +146,7 @@ def passImage():
     imgscreen = imgscreen.convert_alpha()
     surf_1 = pygame.transform.scale(game.draw_surface, (256, 128))
 
-    imgscreen.blit(surf_1, (-20, 0))
+    imgscreen.blit(surf_1, (-23, 0))
     
     # Flip the image horizontally
     imgscreen = pygame.transform.flip(imgscreen, True, False)
