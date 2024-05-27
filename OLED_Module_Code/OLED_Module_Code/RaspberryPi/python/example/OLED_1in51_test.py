@@ -46,7 +46,7 @@ try:
         Himage2.paste(drawbmp, (0, 0))
         Himage2=Himage2.transpose(Image.FLIP_TOP_BOTTOM)
         Himage2=Himage2.rotate(180) 	
-        Himage3.paste(Himage2, (0, 20))
+        Himage3.paste(Himage2, (0, 19))
         disp.ShowImage(disp.getbuffer(Himage3)) 
         drawbmp = None
 
