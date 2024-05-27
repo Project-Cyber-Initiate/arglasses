@@ -195,7 +195,7 @@ if (__name__ == "__main__"):
     def load_video():
         global frames, audio_length
         yt.clearHistory()
-        video = yt.download('https://www.youtube.com/watch?v=S-SDBEPBiTM')
+        video = yt.download('https://www.youtube.com/watch?v=9bZkp7q19f0')
         frames_thread = Thread(target=yt.splitFrames, args=(video,))
         frames_thread.start()
 
@@ -237,9 +237,9 @@ if (__name__ == "__main__"):
 
             f = frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))]
             img = pygame.image.frombuffer(f.tobytes(), f.size, f.mode)
-            img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT), int(HEIGHT)))
-
-            game.draw_surface.blit(img, (0, 0))
+            img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT) * 0.8, int(HEIGHT) * 0.8))
+            
+            game.draw_surface.blit(img, (offsetX, offsetY))
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.7))
         overlay_surface = pygame.transform.flip(overlay_surface, False, True)
