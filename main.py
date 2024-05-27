@@ -189,6 +189,7 @@ if (__name__ == "__main__"):
                 game.render += 1
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w, display_info.current_h / 1))
+        overlay_surface = pygame.transform.flip(overlay_surface, False, True)
 
         game.screen.fill(pygame.Color(255, 255, 255))
         game.screen.blit(overlay_surface, (0, 0))
