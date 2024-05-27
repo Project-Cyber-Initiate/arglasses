@@ -188,6 +188,7 @@ if (__name__ == "__main__"):
     # https://www.youtube.com/watch?v=S-SDBEPBiTM joe biden
     # https://www.youtube.com/watch?v=xuCn8ux2gbs history of the world
     frames = []
+    frames_data = []
     audio_length = 0
     currentFrame = 0
     video_playing = False
@@ -214,6 +215,8 @@ if (__name__ == "__main__"):
         audio_length = pygame.mixer.Sound('yt-audio.mp3').get_length() * 1000
 
         frames = yt.getFrames()
+        for i in range(len(frames)):
+            frames_data.append(None)
 
     def draw_window(events):
         global currentFrame, audio_length
@@ -235,12 +238,28 @@ if (__name__ == "__main__"):
             if pygame.mixer.music.get_pos() == -1:
                 pygame.mixer.music.play(0)
 
-            f = Image.open(frames[math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))])
+            fNum = math.floor((pygame.mixer.music.get_pos() / audio_length) * len(frames))
+
+            for i in range(1, 10):
+                if fNum + i < len(frames) and frames_data[fNum + i] is None:
+                    def run():
+                        t = Image.open(frames[fNum + i])
+                        t.closed = False
+                        frames_data[fNum + i] = t
+
+                    Thread(target=run).start()
+            if frames_data[fNum] is not None and not frames_data[fNum].closed:
+                f = frames_data[fNum]
+            else:
+                f = Image.open(frames[fNum])
+                f.closed = False
             img = pygame.image.frombuffer(f.tobytes(), f.size, f.mode)
             img = pygame.transform.scale(img, (int(img.get_width() / img.get_height() * HEIGHT) * 0.8, int(HEIGHT) * 0.8))
-            f.close()
 
             game.draw_surface.blit(img, (offsetX, offsetY))
+
+            f.close()
+            f.closed = True
 
         overlay_surface = pygame.transform.scale(game.draw_surface, (display_info.current_w * 0.8, display_info.current_h * 0.7))
         overlay_surface = pygame.transform.flip(overlay_surface, False, True)
