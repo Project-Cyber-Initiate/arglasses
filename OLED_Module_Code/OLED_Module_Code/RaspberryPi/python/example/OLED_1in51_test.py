@@ -43,8 +43,6 @@ try:
             drawbmp = Image.open(picpath(currentPath))
             drawbmp = ImageOps.mirror(drawbmp)
         Himage2.paste(drawbmp, (0, 0))
-        Himage2=Himage2.rotate(180) 	
-        Himage2=Himage2.transpose(Image.FLIP_TOP_BOTTOM)
         disp.ShowImage(disp.getbuffer(Himage2)) 
         drawbmp = None
 
